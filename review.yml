@@ -1,0 +1,88 @@
+aid: eight-sleep
+name: Eight Sleep
+review:
+  question: Does Eight Sleep expose a documented public WebSocket or realtime API?
+  answer: false
+  date: '2026-06-20'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was created. Eight Sleep publishes no official public
+    API of any kind, and the unofficial community client API
+    (auth-api / client-api / app-api .8slp.net) is request/response REST over
+    HTTPS only. No documented WebSocket, SSE, or other streaming/realtime
+    transport exists in the reverse-engineered surface used by pyEight or the
+    Home Assistant Eight Sleep integration. Near-realtime behavior in those
+    clients is achieved by polling the REST endpoints, not by a streaming API.
+findings:
+  summary: |
+    Eight Sleep does NOT publish an official public developer API. This catalog
+    documents the UNOFFICIAL, community-reverse-engineered client API that
+    powers the Eight Sleep mobile app, derived from open-source projects
+    pyEight (mezz64 / lukas-clarke) and the Home Assistant Eight Sleep
+    integration (lukas-clarke). That surface spans three HTTPS hosts:
+    auth-api.8slp.net (OAuth2 token issuance), client-api.8slp.net (user,
+    device, trends reads), and app-api.8slp.net (temperature, away mode, base,
+    alarms, routines control). All confirmed endpoints are REST over HTTPS.
+    No WebSocket (ws:// / wss://), Server-Sent Events, or other realtime
+    streaming transport is documented or used; community clients poll the REST
+    endpoints (device ~1/min, user ~1/5min) for fresh data. The endpoints are
+    undocumented and unsupported by Eight Sleep and may change without notice.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://auth-api.8slp.net/v1
+      documented: false
+      note: Unofficial OAuth2 token host (POST /v1/tokens). Reverse-engineered.
+    - protocol: REST
+      scheme: https
+      baseURL: https://client-api.8slp.net/v1
+      documented: false
+      note: Unofficial user/device/trends reads. Reverse-engineered.
+    - protocol: REST
+      scheme: https
+      baseURL: https://app-api.8slp.net/v1
+      documented: false
+      note: Unofficial temperature/away/base/alarms control. Reverse-engineered.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket or streaming endpoint exists in the community-documented surface; clients poll REST.
+  endpointsConfirmedRest:
+    - POST https://auth-api.8slp.net/v1/tokens
+    - GET  https://client-api.8slp.net/v1/users/me
+    - GET  https://client-api.8slp.net/v1/users/{userId}
+    - GET  https://client-api.8slp.net/v1/devices/{deviceId}
+    - GET  https://app-api.8slp.net/v1/users/{userId}/temperature
+    - PUT  https://app-api.8slp.net/v1/users/{userId}/temperature
+    - PUT  https://app-api.8slp.net/v1/users/{userId}/away-mode
+    - GET  https://client-api.8slp.net/v1/users/{userId}/trends
+    - GET  https://app-api.8slp.net/v1/users/{userId}/base
+    - POST https://app-api.8slp.net/v1/users/{userId}/base/angle
+    - GET  https://app-api.8slp.net/v1/users/{userId}/alarms
+    - PUT  https://app-api.8slp.net/v1/users/{userId}/alarms/{alarmId}
+    - GET  https://app-api.8slp.net/v1/users/{userId}/routines
+sources:
+  - url: https://github.com/mezz64/pyEight
+    type: Documentation
+    note: Original Python library interfacing with the Eight Sleep API; documents client-api host and user/device/trends reads.
+  - url: https://github.com/lukas-clarke/pyEight
+    type: Documentation
+    note: OAuth2 fork; documents auth-api token host and app-api temperature/away/base/alarm control.
+  - url: https://github.com/lukas-clarke/eight_sleep
+    type: Documentation
+    note: Home Assistant integration; documents OAuth2 login against auth-api.8slp.net and V2/OAuth2 flow.
+unofficial:
+  status: true
+  note: |
+    Eight Sleep does not offer, document, or support a public API. All endpoints
+    in this catalog are community-reverse-engineered from the mobile app's
+    backend and are subject to change or removal without notice. Use only with
+    your own account and credentials.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No streaming/realtime protocol surface exists and no official API exists, so
+    no AsyncAPI document was authored. The apis.yml and OpenAPI clearly label the
+    entire surface as unofficial and community-reverse-engineered.

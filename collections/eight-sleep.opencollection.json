@@ -1,0 +1,234 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Eight Sleep Unofficial Community API",
+    "version": "unofficial-v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Token (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://auth-api.8slp.net/v1/tokens",
+            "body": {
+              "type": "json",
+              "data": "{\"client_id\":\"<APP_CLIENT_ID>\",\"client_secret\":\"<APP_CLIENT_SECRET>\",\"grant_type\":\"password\",\"username\":\"<EMAIL>\",\"password\":\"<PASSWORD>\"}"
+            }
+          },
+          "docs": "UNOFFICIAL OAuth2 password grant against auth-api.8slp.net. Returns a bearer access token and refresh token."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "User",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Current User (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://client-api.8slp.net/v1/users/me"
+          },
+          "docs": "UNOFFICIAL read of the authenticated user's profile and device assignment."
+        },
+        {
+          "info": {
+            "name": "Get User by Id (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://client-api.8slp.net/v1/users/{{user_id}}"
+          },
+          "docs": "UNOFFICIAL read of a single user (e.g. left/right sleeper)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Device",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Device (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://client-api.8slp.net/v1/devices/{{device_id}}?filter=leftUserId,rightUserId,awaySides"
+          },
+          "docs": "UNOFFICIAL read of Pod device state and side assignment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Temperature",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Temperature (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app-api.8slp.net/v1/users/{{user_id}}/temperature"
+          },
+          "docs": "UNOFFICIAL read of current heating level (-100..100, unit-less)."
+        },
+        {
+          "info": {
+            "name": "Set Temperature (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app-api.8slp.net/v1/users/{{user_id}}/temperature",
+            "body": {
+              "type": "json",
+              "data": "{\"currentLevel\":10,\"currentState\":{\"type\":\"smart\"}}"
+            }
+          },
+          "docs": "UNOFFICIAL set of heating level and on/off state."
+        },
+        {
+          "info": {
+            "name": "Set Away Mode (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app-api.8slp.net/v1/users/{{user_id}}/away-mode",
+            "body": {
+              "type": "json",
+              "data": "{\"awayPeriod\":{\"action\":\"start\"}}"
+            }
+          },
+          "docs": "UNOFFICIAL start/end of away mode for a user's side."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Trends",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Trends (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://client-api.8slp.net/v1/users/{{user_id}}/trends?tz=America/New_York&from=2026-06-01&to=2026-06-20"
+          },
+          "docs": "UNOFFICIAL read of per-night sleep and biometric trends."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Base",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Base (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app-api.8slp.net/v1/users/{{user_id}}/base"
+          },
+          "docs": "UNOFFICIAL read of adjustable Base state (head/feet angles)."
+        },
+        {
+          "info": {
+            "name": "Set Base Angle (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app-api.8slp.net/v1/users/{{user_id}}/base/angle",
+            "body": {
+              "type": "json",
+              "data": "{\"torso\":30,\"leg\":10,\"preset\":\"relax\"}"
+            }
+          },
+          "docs": "UNOFFICIAL set of adjustable Base angles or preset."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Alarms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Alarms (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app-api.8slp.net/v1/users/{{user_id}}/alarms"
+          },
+          "docs": "UNOFFICIAL read of configured thermal/vibration alarms."
+        },
+        {
+          "info": {
+            "name": "Update Alarm (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app-api.8slp.net/v1/users/{{user_id}}/alarms/{{alarm_id}}",
+            "body": {
+              "type": "json",
+              "data": "{\"enabled\":true,\"time\":\"06:30\",\"vibrationEnabled\":true,\"thermalEnabled\":true}"
+            }
+          },
+          "docs": "UNOFFICIAL update of a single alarm."
+        },
+        {
+          "info": {
+            "name": "Get Routines (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app-api.8slp.net/v1/users/{{user_id}}/routines"
+          },
+          "docs": "UNOFFICIAL read of user routines (newer app builds)."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,267 @@
+{
+  "info": {
+    "name": "Eight Sleep Unofficial Community API",
+    "description": "UNOFFICIAL, community-reverse-engineered Eight Sleep client API. Eight Sleep does NOT publish an official public developer API. These endpoints power the Eight Sleep mobile app and are derived from open-source projects pyEight (https://github.com/mezz64/pyEight, https://github.com/lukas-clarke/pyEight) and the Home Assistant Eight Sleep integration (https://github.com/lukas-clarke/eight_sleep). They are undocumented, unsupported, and may change without notice. Use only with your own account.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "auth_host", "value": "https://auth-api.8slp.net", "type": "string" },
+    { "key": "client_host", "value": "https://client-api.8slp.net", "type": "string" },
+    { "key": "app_host", "value": "https://app-api.8slp.net", "type": "string" },
+    { "key": "access_token", "value": "", "type": "string" },
+    { "key": "user_id", "value": "", "type": "string" },
+    { "key": "device_id", "value": "", "type": "string" },
+    { "key": "alarm_id", "value": "", "type": "string" }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{access_token}}", "type": "string" }
+    ]
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Create Token (unofficial)",
+          "request": {
+            "method": "POST",
+            "auth": { "type": "noauth" },
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": \"<APP_CLIENT_ID>\",\n  \"client_secret\": \"<APP_CLIENT_SECRET>\",\n  \"grant_type\": \"password\",\n  \"username\": \"<EMAIL>\",\n  \"password\": \"<PASSWORD>\"\n}"
+            },
+            "url": {
+              "raw": "{{auth_host}}/v1/tokens",
+              "host": ["{{auth_host}}"],
+              "path": ["v1", "tokens"]
+            },
+            "description": "UNOFFICIAL OAuth2 password grant against auth-api.8slp.net. Returns a bearer access token and refresh token."
+          }
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Get Current User (unofficial)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{client_host}}/v1/users/me",
+              "host": ["{{client_host}}"],
+              "path": ["v1", "users", "me"]
+            },
+            "description": "UNOFFICIAL read of the authenticated user's profile and device assignment."
+          }
+        },
+        {
+          "name": "Get User by Id (unofficial)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{client_host}}/v1/users/{{user_id}}",
+              "host": ["{{client_host}}"],
+              "path": ["v1", "users", "{{user_id}}"]
+            },
+            "description": "UNOFFICIAL read of a single user (e.g. left/right sleeper)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Device",
+      "item": [
+        {
+          "name": "Get Device (unofficial)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{client_host}}/v1/devices/{{device_id}}?filter=leftUserId,rightUserId,awaySides",
+              "host": ["{{client_host}}"],
+              "path": ["v1", "devices", "{{device_id}}"],
+              "query": [
+                { "key": "filter", "value": "leftUserId,rightUserId,awaySides" }
+              ]
+            },
+            "description": "UNOFFICIAL read of Pod device state and side assignment."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Temperature",
+      "item": [
+        {
+          "name": "Get Temperature (unofficial)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{app_host}}/v1/users/{{user_id}}/temperature",
+              "host": ["{{app_host}}"],
+              "path": ["v1", "users", "{{user_id}}", "temperature"]
+            },
+            "description": "UNOFFICIAL read of current heating level (-100..100, unit-less)."
+          }
+        },
+        {
+          "name": "Set Temperature (unofficial)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currentLevel\": 10,\n  \"currentState\": { \"type\": \"smart\" }\n}"
+            },
+            "url": {
+              "raw": "{{app_host}}/v1/users/{{user_id}}/temperature",
+              "host": ["{{app_host}}"],
+              "path": ["v1", "users", "{{user_id}}", "temperature"]
+            },
+            "description": "UNOFFICIAL set of heating level and on/off state."
+          }
+        },
+        {
+          "name": "Set Away Mode (unofficial)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"awayPeriod\": { \"action\": \"start\" }\n}"
+            },
+            "url": {
+              "raw": "{{app_host}}/v1/users/{{user_id}}/away-mode",
+              "host": ["{{app_host}}"],
+              "path": ["v1", "users", "{{user_id}}", "away-mode"]
+            },
+            "description": "UNOFFICIAL start/end of away mode for a user's side."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Trends",
+      "item": [
+        {
+          "name": "Get Trends (unofficial)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{client_host}}/v1/users/{{user_id}}/trends?tz=America/New_York&from=2026-06-01&to=2026-06-20",
+              "host": ["{{client_host}}"],
+              "path": ["v1", "users", "{{user_id}}", "trends"],
+              "query": [
+                { "key": "tz", "value": "America/New_York" },
+                { "key": "from", "value": "2026-06-01" },
+                { "key": "to", "value": "2026-06-20" }
+              ]
+            },
+            "description": "UNOFFICIAL read of per-night sleep and biometric trends."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Base",
+      "item": [
+        {
+          "name": "Get Base (unofficial)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{app_host}}/v1/users/{{user_id}}/base",
+              "host": ["{{app_host}}"],
+              "path": ["v1", "users", "{{user_id}}", "base"]
+            },
+            "description": "UNOFFICIAL read of adjustable Base state (head/feet angles)."
+          }
+        },
+        {
+          "name": "Set Base Angle (unofficial)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"torso\": 30,\n  \"leg\": 10,\n  \"preset\": \"relax\"\n}"
+            },
+            "url": {
+              "raw": "{{app_host}}/v1/users/{{user_id}}/base/angle",
+              "host": ["{{app_host}}"],
+              "path": ["v1", "users", "{{user_id}}", "base", "angle"]
+            },
+            "description": "UNOFFICIAL set of adjustable Base angles or preset."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Alarms",
+      "item": [
+        {
+          "name": "Get Alarms (unofficial)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{app_host}}/v1/users/{{user_id}}/alarms",
+              "host": ["{{app_host}}"],
+              "path": ["v1", "users", "{{user_id}}", "alarms"]
+            },
+            "description": "UNOFFICIAL read of configured thermal/vibration alarms."
+          }
+        },
+        {
+          "name": "Update Alarm (unofficial)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enabled\": true,\n  \"time\": \"06:30\",\n  \"vibrationEnabled\": true,\n  \"thermalEnabled\": true\n}"
+            },
+            "url": {
+              "raw": "{{app_host}}/v1/users/{{user_id}}/alarms/{{alarm_id}}",
+              "host": ["{{app_host}}"],
+              "path": ["v1", "users", "{{user_id}}", "alarms", "{{alarm_id}}"]
+            },
+            "description": "UNOFFICIAL update of a single alarm."
+          }
+        },
+        {
+          "name": "Get Routines (unofficial)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{app_host}}/v1/users/{{user_id}}/routines",
+              "host": ["{{app_host}}"],
+              "path": ["v1", "users", "{{user_id}}", "routines"]
+            },
+            "description": "UNOFFICIAL read of user routines (newer app builds)."
+          }
+        }
+      ]
+    }
+  ]
+}

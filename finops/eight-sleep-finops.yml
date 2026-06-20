@@ -1,0 +1,92 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Eight Sleep
+providerId: eight-sleep
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- Sleep
+- IoT
+- Smart Home
+- Health
+- Unofficial
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Eight Sleep spend. Eight Sleep is a consumer hardware and
+  subscription business, not a usage-metered API platform. There is NO official
+  public API and therefore no API-call billing. Cost consists of a one-time
+  Pod (and optional Base) hardware purchase plus a recurring Autopilot
+  membership. The unofficial community client API carries no incremental fee
+  because it rides on the same consumer account and membership. There is no
+  usage-based API metering to allocate or optimize.
+notes: >-
+  No usage-based API charges exist. Cost management here is consumer
+  subscription management (the Autopilot membership) plus the upfront hardware
+  outlay. Verify current prices at https://www.eightsleep.com.
+sources:
+- https://www.eightsleep.com
+- https://github.com/mezz64/pyEight
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Eight Sleep
+serviceCategory: Internet of Things
+billingModel:
+  pricingCategory: Subscription
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+focusColumns:
+  ServiceName: Eight Sleep Autopilot
+  ServiceCategory: Internet of Things
+  ProviderName: Eight Sleep
+  PublisherName: Eight Sleep
+  InvoiceIssuerName: Eight Sleep
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription
+meters:
+- name: hardware_purchase
+  description: One-time purchase of the Pod cover and optional adjustable Base.
+  unit: devices
+  aggregation: sum
+  dimensions:
+  - account
+  - product
+- name: autopilot_membership
+  description: Recurring Autopilot membership fee, billed monthly or annually.
+  unit: subscription
+  aggregation: sum
+  dimensions:
+  - account
+  - tier
+- name: api_requests
+  description: >-
+    Unofficial community API calls. Not metered or billed by Eight Sleep -
+    there is no official API and no per-call charge.
+  unit: requests
+  aggregation: sum
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Track the Autopilot membership tier and renewal date plus the upfront hardware cost; no API usage to inspect.
+- name: Allocation
+  description: Map hardware and membership to a household or individual sleeper; there is no API-key-level allocation.
+- name: Optimization
+  description: Choose the Autopilot tier that matches needed features; weigh annual vs monthly; there is no API spend to optimize.
+- name: Accountability
+  description: Review membership renewals against value received; cancel or downgrade unused tiers.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

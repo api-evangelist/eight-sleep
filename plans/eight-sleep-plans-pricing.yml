@@ -1,0 +1,142 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Eight Sleep
+providerId: eight-sleep
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: true
+tags:
+- Sleep
+- IoT
+- Smart Home
+- Health
+- Plans
+description: >-
+  Eight Sleep monetizes hardware (the Pod smart mattress cover and optional
+  adjustable Base) plus a recurring Autopilot membership required to unlock
+  the full software experience. There is NO official, separately priced
+  developer API plan; the community client API used by pyEight and the Home
+  Assistant integration is accessed with the same membership and account that
+  the consumer mobile app uses. The hardware and membership prices below are
+  consumer-facing list prices and vary by size, promotions, and region.
+notes: >-
+  Prices are approximate consumer list prices captured from public reviews and
+  Eight Sleep marketing as of June 2026 and change frequently with promotions,
+  size, and region. There is no public API price sheet because there is no
+  official public API. Verify current pricing at https://www.eightsleep.com.
+sources:
+- https://www.eightsleep.com
+- https://www.eightsleep.com/blog/your-member-guide-to-getting-the-all-new-pod-5-special-access-and-exclusive-pricing/
+- https://www.mattressnut.com/eight-sleep-pod-4-2026-deep-review/
+plans:
+- id: eight-sleep-pod-hardware
+  name: Pod Hardware
+  type: one_time
+  description: >-
+    One-time purchase of the Pod smart mattress cover (Pod 4 / Pod 5 ranges),
+    priced by bed size. The optional adjustable Base is sold separately.
+  entries:
+  - label: Pod Cover (Queen, representative)
+    name: pod_cover_queen
+    type: flat
+    metric: device
+    limit: -1
+    timeFrame: lifetime
+    geo: us
+    unit: 1
+    price: approx $2,449-$2,849 (varies by Pod 4 / Pod 5 and size)
+    userMultiplied: false
+  - label: Adjustable Base (optional)
+    name: adjustable_base
+    type: flat
+    metric: device
+    limit: -1
+    timeFrame: lifetime
+    geo: us
+    unit: 1
+    price: sold separately - see eightsleep.com
+    userMultiplied: false
+  elements:
+  - name: Pod Smart Mattress Cover
+  - name: Hub
+  - name: Adjustable Base (optional)
+- id: eight-sleep-autopilot-membership
+  name: Autopilot Membership
+  type: subscription
+  description: >-
+    Recurring membership required to unlock Autopilot AI temperature
+    optimization, full sleep-stage tracking, heart rate / HRV / respiratory
+    monitoring, sleep insights, thermal/vibration alarms, and ongoing software
+    updates. A membership commitment is included with new Pods (commonly the
+    first 12 months). Tiering and prices vary by Pod generation and promotion.
+  entries:
+  - label: Autopilot Standard
+    name: autopilot_standard
+    type: recurring
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: us
+    unit: 1
+    price: approx $17/mo (tier and price vary by generation/promotion)
+    userMultiplied: false
+  - label: Autopilot Enhanced
+    name: autopilot_enhanced
+    type: recurring
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: us
+    unit: 1
+    price: approx $25/mo
+    userMultiplied: false
+  - label: Autopilot Elite
+    name: autopilot_elite
+    type: recurring
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: us
+    unit: 1
+    price: approx $33/mo
+    userMultiplied: false
+  - label: Autopilot (annual, legacy tier)
+    name: autopilot_annual
+    type: recurring
+    metric: subscription
+    limit: -1
+    timeFrame: year
+    geo: us
+    unit: 1
+    price: approx $199/yr (or ~$19/mo) on legacy plans
+    userMultiplied: false
+  elements:
+  - name: Autopilot AI Temperature Optimization
+  - name: Sleep and Biometric Tracking
+  - name: Thermal and Vibration Alarms
+  - name: Software Updates
+- id: eight-sleep-developer-api
+  name: Developer / API Access
+  type: free
+  description: >-
+    Eight Sleep does not offer an official, separately priced developer API
+    plan. The community-reverse-engineered client API is reached with the same
+    account and Autopilot membership used by the consumer mobile app; there is
+    no additional API fee and no official terms.
+  entries:
+  - label: Unofficial Community API
+    name: unofficial_api
+    type: free
+    metric: requests
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: no official API plan - included with consumer account/membership
+    userMultiplied: false
+  elements:
+  - name: Unofficial Client API (auth/client/app hosts)
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

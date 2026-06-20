@@ -1,0 +1,61 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Eight Sleep
+providerId: eight-sleep
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- Sleep
+- IoT
+- Smart Home
+- Unofficial
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  Eight Sleep does NOT publish an official public API, and therefore publishes
+  no documented rate limits. The community client API (auth-api / client-api /
+  app-api .8slp.net) is undocumented and unsupported. Open-source clients such
+  as pyEight self-impose conservative polling intervals - commonly device data
+  refreshed about once per minute and user data about once every five minutes -
+  to avoid hammering the backend. Any server-side throttling is unpublished and
+  may change without notice. Values here are community conventions, not
+  reconciled provider limits.
+notes: >-
+  No official limits exist to reconcile. Treat the polling intervals below as
+  community best practice from pyEight / the Home Assistant integration, not as
+  guarantees. Respect the user's own account and avoid aggressive polling.
+sources:
+- https://github.com/mezz64/pyEight
+- https://github.com/lukas-clarke/eight_sleep
+- https://github.com/lukas-clarke/pyEight
+responseCodes:
+  throttled: 429
+limits:
+- name: Device Data Polling (community convention)
+  scope: account
+  metric: requests
+  limit: ~1 request per minute
+  notes: pyEight recommends refreshing device data roughly once per minute.
+- name: User Data Polling (community convention)
+  scope: account
+  metric: requests
+  limit: ~1 request per 5 minutes
+  notes: pyEight recommends refreshing user data roughly once every five minutes.
+- name: Server-Side Throttling
+  scope: account
+  metric: requests
+  limit: undocumented
+  notes: Eight Sleep does not publish backend rate limits; 401/429 handling is up to the client.
+policies:
+- name: Conservative Polling
+  description: Community clients self-throttle device/user polling to avoid load and account flags.
+- name: Token Refresh
+  description: Clients refresh the OAuth2 bearer token before expiry (e.g. ~120s buffer) and retry on 401.
+- name: Backoff Strategy
+  description: Clients should back off on errors and honor any Retry-After the backend returns.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
