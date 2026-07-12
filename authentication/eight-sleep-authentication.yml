@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/eight-sleep-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: Bearer access token issued by POST /v1/tokens on auth-api.8slp.net. Unofficial.
+  sources:
+  - openapi/eight-sleep-openapi.yml

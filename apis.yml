@@ -149,6 +149,10 @@ apis:
     snooze, stop, or dismiss them. Thermal/vibration wake-up alarms are part of
     Autopilot. Reverse-engineered, not officially supported.
 common:
+- type: DomainSecurity
+  url: security/eight-sleep-domain-security.yml
+- type: Authentication
+  url: authentication/eight-sleep-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/eight-sleep
 - type: Website
@@ -161,6 +165,8 @@ common:
   url: rate-limits/eight-sleep-rate-limits.yml
 - type: FinOps
   url: finops/eight-sleep-finops.yml
+- url: https://eightsleep.com/blog/
+  type: Blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
