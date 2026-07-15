@@ -149,6 +149,8 @@ apis:
     snooze, stop, or dismiss them. Thermal/vibration wake-up alarms are part of
     Autopilot. Reverse-engineered, not officially supported.
 common:
+- type: AgenticAccess
+  url: agentic-access/eight-sleep-agentic-access.yml
 - type: DomainSecurity
   url: security/eight-sleep-domain-security.yml
 - type: Authentication
