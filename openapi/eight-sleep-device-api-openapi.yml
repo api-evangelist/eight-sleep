@@ -1,0 +1,86 @@
+openapi: 3.0.1
+info:
+  title: Eight Sleep Unofficial Community Alarms Device API
+  description: 'UNOFFICIAL, community-reverse-engineered specification of the Eight Sleep client API that powers the Eight Sleep mobile app. Eight Sleep does NOT publish an official public developer API. The endpoints documented here were derived from open-source projects - notably pyEight (https://github.com/mezz64/pyEight and https://github.com/lukas-clarke/pyEight) and the Home Assistant Eight Sleep integration (https://github.com/lukas-clarke/eight_sleep). They span three hosts: auth-api.8slp.net (OAuth2 token issuance), client-api.8slp.net (user, device, and trends reads), and app-api.8slp.net (temperature, away mode, base, alarms, and routines control). These endpoints are undocumented, unsupported, and may change or break without notice. Use only with your own Eight Sleep account and credentials.'
+  contact:
+    name: Eight Sleep
+    url: https://www.eightsleep.com
+  version: unofficial-v1
+servers:
+- url: https://auth-api.8slp.net
+  description: Authentication host (OAuth2 token issuance)
+- url: https://client-api.8slp.net
+  description: Client API host (user, device, trends reads)
+- url: https://app-api.8slp.net
+  description: App API host (temperature, away mode, base, alarms, routines)
+tags:
+- name: Device
+  description: Pod device state and side assignment reads (unofficial).
+paths:
+  /v1/devices/{deviceId}:
+    get:
+      operationId: getDevice
+      tags:
+      - Device
+      summary: Get device state (unofficial)
+      description: UNOFFICIAL read against client-api.8slp.net returning Pod device state, online status, firmware, and side assignment. Community clients commonly request a filtered view via the `filter` query parameter (for example `leftUserId,rightUserId,awaySides`).
+      servers:
+      - url: https://client-api.8slp.net
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/DeviceId'
+      - name: filter
+        in: query
+        required: false
+        description: Comma-separated list of device fields to return.
+        schema:
+          type: string
+          example: leftUserId,rightUserId,awaySides
+      responses:
+        '200':
+          description: Device object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceResponse'
+        '401':
+          description: Missing or expired token.
+        '404':
+          description: Device not found.
+components:
+  parameters:
+    DeviceId:
+      name: deviceId
+      in: path
+      required: true
+      description: Eight Sleep Pod device identifier.
+      schema:
+        type: string
+  schemas:
+    DeviceResponse:
+      type: object
+      properties:
+        result:
+          type: object
+          properties:
+            deviceId:
+              type: string
+            online:
+              type: boolean
+            firmwareVersion:
+              type: string
+            leftUserId:
+              type: string
+            rightUserId:
+              type: string
+            awaySides:
+              type: object
+              additionalProperties:
+                type: boolean
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer access token issued by POST /v1/tokens on auth-api.8slp.net. Unofficial.

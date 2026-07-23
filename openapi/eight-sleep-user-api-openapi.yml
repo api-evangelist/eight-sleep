@@ -1,0 +1,104 @@
+openapi: 3.0.1
+info:
+  title: Eight Sleep Unofficial Community Alarms User API
+  description: 'UNOFFICIAL, community-reverse-engineered specification of the Eight Sleep client API that powers the Eight Sleep mobile app. Eight Sleep does NOT publish an official public developer API. The endpoints documented here were derived from open-source projects - notably pyEight (https://github.com/mezz64/pyEight and https://github.com/lukas-clarke/pyEight) and the Home Assistant Eight Sleep integration (https://github.com/lukas-clarke/eight_sleep). They span three hosts: auth-api.8slp.net (OAuth2 token issuance), client-api.8slp.net (user, device, and trends reads), and app-api.8slp.net (temperature, away mode, base, alarms, and routines control). These endpoints are undocumented, unsupported, and may change or break without notice. Use only with your own Eight Sleep account and credentials.'
+  contact:
+    name: Eight Sleep
+    url: https://www.eightsleep.com
+  version: unofficial-v1
+servers:
+- url: https://auth-api.8slp.net
+  description: Authentication host (OAuth2 token issuance)
+- url: https://client-api.8slp.net
+  description: Client API host (user, device, trends reads)
+- url: https://app-api.8slp.net
+  description: App API host (temperature, away mode, base, alarms, routines)
+tags:
+- name: User
+  description: Current and individual user profile reads (unofficial).
+paths:
+  /v1/users/me:
+    get:
+      operationId: getCurrentUser
+      tags:
+      - User
+      summary: Get the current user (unofficial)
+      description: UNOFFICIAL read against client-api.8slp.net returning the authenticated user's profile, current device id, and bed-side assignment.
+      servers:
+      - url: https://client-api.8slp.net
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Current user object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '401':
+          description: Missing or expired token.
+  /v1/users/{userId}:
+    get:
+      operationId: getUser
+      tags:
+      - User
+      summary: Get a user by id (unofficial)
+      description: UNOFFICIAL read against client-api.8slp.net returning a single user's profile by id (e.g. the left or right sleeper on a Pod).
+      servers:
+      - url: https://client-api.8slp.net
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: User object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '401':
+          description: Missing or expired token.
+        '404':
+          description: User not found.
+components:
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      description: Eight Sleep user identifier.
+      schema:
+        type: string
+  schemas:
+    UserResponse:
+      type: object
+      properties:
+        user:
+          type: object
+          properties:
+            userId:
+              type: string
+            email:
+              type: string
+            firstName:
+              type: string
+            lastName:
+              type: string
+            currentDevice:
+              type: object
+              properties:
+                id:
+                  type: string
+                side:
+                  type: string
+                  enum:
+                  - left
+                  - right
+                  - solo
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer access token issued by POST /v1/tokens on auth-api.8slp.net. Unofficial.

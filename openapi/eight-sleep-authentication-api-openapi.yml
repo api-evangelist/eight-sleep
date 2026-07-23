@@ -1,0 +1,90 @@
+openapi: 3.0.1
+info:
+  title: Eight Sleep Unofficial Community Alarms Authentication API
+  description: 'UNOFFICIAL, community-reverse-engineered specification of the Eight Sleep client API that powers the Eight Sleep mobile app. Eight Sleep does NOT publish an official public developer API. The endpoints documented here were derived from open-source projects - notably pyEight (https://github.com/mezz64/pyEight and https://github.com/lukas-clarke/pyEight) and the Home Assistant Eight Sleep integration (https://github.com/lukas-clarke/eight_sleep). They span three hosts: auth-api.8slp.net (OAuth2 token issuance), client-api.8slp.net (user, device, and trends reads), and app-api.8slp.net (temperature, away mode, base, alarms, and routines control). These endpoints are undocumented, unsupported, and may change or break without notice. Use only with your own Eight Sleep account and credentials.'
+  contact:
+    name: Eight Sleep
+    url: https://www.eightsleep.com
+  version: unofficial-v1
+servers:
+- url: https://auth-api.8slp.net
+  description: Authentication host (OAuth2 token issuance)
+- url: https://client-api.8slp.net
+  description: Client API host (user, device, trends reads)
+- url: https://app-api.8slp.net
+  description: App API host (temperature, away mode, base, alarms, routines)
+tags:
+- name: Authentication
+  description: OAuth2 password-grant token issuance (unofficial).
+paths:
+  /v1/tokens:
+    post:
+      operationId: createToken
+      tags:
+      - Authentication
+      summary: Issue an OAuth2 access token (unofficial)
+      description: UNOFFICIAL OAuth2 password-grant request against auth-api.8slp.net. Exchanges an account email and password (plus a client_id and client_secret captured from the mobile app) for a bearer access token and refresh token. Not an official, supported, or documented endpoint.
+      servers:
+      - url: https://auth-api.8slp.net
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+      responses:
+        '200':
+          description: Access and refresh tokens issued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          description: Invalid credentials.
+components:
+  schemas:
+    TokenRequest:
+      type: object
+      required:
+      - client_id
+      - client_secret
+      - grant_type
+      - username
+      - password
+      properties:
+        client_id:
+          type: string
+          description: App client id captured from the Eight Sleep mobile app.
+        client_secret:
+          type: string
+          description: App client secret captured from the Eight Sleep mobile app.
+        grant_type:
+          type: string
+          example: password
+        username:
+          type: string
+          description: Account email address.
+        password:
+          type: string
+          format: password
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+        token_type:
+          type: string
+          example: Bearer
+        expires_in:
+          type: integer
+          description: Token lifetime in seconds.
+        userId:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer access token issued by POST /v1/tokens on auth-api.8slp.net. Unofficial.

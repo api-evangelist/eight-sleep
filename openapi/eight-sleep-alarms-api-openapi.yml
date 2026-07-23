@@ -1,0 +1,136 @@
+openapi: 3.0.1
+info:
+  title: Eight Sleep Unofficial Community Alarms API
+  description: 'UNOFFICIAL, community-reverse-engineered specification of the Eight Sleep client API that powers the Eight Sleep mobile app. Eight Sleep does NOT publish an official public developer API. The endpoints documented here were derived from open-source projects - notably pyEight (https://github.com/mezz64/pyEight and https://github.com/lukas-clarke/pyEight) and the Home Assistant Eight Sleep integration (https://github.com/lukas-clarke/eight_sleep). They span three hosts: auth-api.8slp.net (OAuth2 token issuance), client-api.8slp.net (user, device, and trends reads), and app-api.8slp.net (temperature, away mode, base, alarms, and routines control). These endpoints are undocumented, unsupported, and may change or break without notice. Use only with your own Eight Sleep account and credentials.'
+  contact:
+    name: Eight Sleep
+    url: https://www.eightsleep.com
+  version: unofficial-v1
+servers:
+- url: https://auth-api.8slp.net
+  description: Authentication host (OAuth2 token issuance)
+- url: https://client-api.8slp.net
+  description: Client API host (user, device, trends reads)
+- url: https://app-api.8slp.net
+  description: App API host (temperature, away mode, base, alarms, routines)
+tags:
+- name: Alarms
+  description: Alarm and routine reads and control (unofficial).
+paths:
+  /v1/users/{userId}/alarms:
+    get:
+      operationId: getAlarms
+      tags:
+      - Alarms
+      summary: List alarms (unofficial)
+      description: UNOFFICIAL read against app-api.8slp.net returning the user's configured thermal/vibration wake-up alarms.
+      servers:
+      - url: https://app-api.8slp.net
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: Alarm list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlarmsResponse'
+        '401':
+          description: Missing or expired token.
+  /v1/users/{userId}/alarms/{alarmId}:
+    put:
+      operationId: updateAlarm
+      tags:
+      - Alarms
+      summary: Update an alarm (unofficial)
+      description: UNOFFICIAL write against app-api.8slp.net that enables, disables, or modifies a single alarm.
+      servers:
+      - url: https://app-api.8slp.net
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      - name: alarmId
+        in: path
+        required: true
+        description: Alarm identifier.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Alarm'
+      responses:
+        '200':
+          description: Updated alarm.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alarm'
+        '401':
+          description: Missing or expired token.
+  /v1/users/{userId}/routines:
+    get:
+      operationId: getRoutines
+      tags:
+      - Alarms
+      summary: Get routines (unofficial)
+      description: UNOFFICIAL read against app-api.8slp.net returning the user's routines, which contain alarm and bedtime/wake configuration in newer app builds.
+      servers:
+      - url: https://app-api.8slp.net
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: Routines payload.
+        '401':
+          description: Missing or expired token.
+components:
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      description: Eight Sleep user identifier.
+      schema:
+        type: string
+  schemas:
+    AlarmsResponse:
+      type: object
+      properties:
+        alarms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Alarm'
+    Alarm:
+      type: object
+      properties:
+        id:
+          type: string
+        enabled:
+          type: boolean
+        time:
+          type: string
+          description: Local alarm time (HH:MM).
+        days:
+          type: array
+          items:
+            type: string
+        vibrationEnabled:
+          type: boolean
+        thermalEnabled:
+          type: boolean
+        snoozeDuration:
+          type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer access token issued by POST /v1/tokens on auth-api.8slp.net. Unofficial.

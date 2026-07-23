@@ -1,0 +1,120 @@
+openapi: 3.0.1
+info:
+  title: Eight Sleep Unofficial Community Alarms Trends API
+  description: 'UNOFFICIAL, community-reverse-engineered specification of the Eight Sleep client API that powers the Eight Sleep mobile app. Eight Sleep does NOT publish an official public developer API. The endpoints documented here were derived from open-source projects - notably pyEight (https://github.com/mezz64/pyEight and https://github.com/lukas-clarke/pyEight) and the Home Assistant Eight Sleep integration (https://github.com/lukas-clarke/eight_sleep). They span three hosts: auth-api.8slp.net (OAuth2 token issuance), client-api.8slp.net (user, device, and trends reads), and app-api.8slp.net (temperature, away mode, base, alarms, and routines control). These endpoints are undocumented, unsupported, and may change or break without notice. Use only with your own Eight Sleep account and credentials.'
+  contact:
+    name: Eight Sleep
+    url: https://www.eightsleep.com
+  version: unofficial-v1
+servers:
+- url: https://auth-api.8slp.net
+  description: Authentication host (OAuth2 token issuance)
+- url: https://client-api.8slp.net
+  description: Client API host (user, device, trends reads)
+- url: https://app-api.8slp.net
+  description: App API host (temperature, away mode, base, alarms, routines)
+tags:
+- name: Trends
+  description: Per-night sleep and biometric trend reads (unofficial).
+paths:
+  /v1/users/{userId}/trends:
+    get:
+      operationId: getTrends
+      tags:
+      - Trends
+      summary: Get sleep trends (unofficial)
+      description: UNOFFICIAL read against client-api.8slp.net returning per-night sleep trend data - sleep score, sleep-stage breakdown, heart rate, HRV, respiratory rate, and toss-and-turn metrics - over a date range.
+      servers:
+      - url: https://client-api.8slp.net
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      - name: tz
+        in: query
+        required: false
+        description: IANA timezone used to bucket nights (e.g. America/New_York).
+        schema:
+          type: string
+      - name: from
+        in: query
+        required: false
+        description: Start date (YYYY-MM-DD).
+        schema:
+          type: string
+          format: date
+      - name: to
+        in: query
+        required: false
+        description: End date (YYYY-MM-DD).
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: Trends payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrendsResponse'
+        '401':
+          description: Missing or expired token.
+components:
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      description: Eight Sleep user identifier.
+      schema:
+        type: string
+  schemas:
+    TrendsResponse:
+      type: object
+      properties:
+        days:
+          type: array
+          items:
+            type: object
+            properties:
+              day:
+                type: string
+                format: date
+              score:
+                type: integer
+                description: Sleep fitness score.
+              sleepDuration:
+                type: integer
+                description: Total sleep in seconds.
+              presenceDuration:
+                type: integer
+              sleepStages:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    stage:
+                      type: string
+                      enum:
+                      - awake
+                      - light
+                      - deep
+                      - rem
+                      - out
+                    duration:
+                      type: integer
+              heartRate:
+                type: number
+              hrv:
+                type: number
+              respiratoryRate:
+                type: number
+              tnt:
+                type: integer
+                description: Toss-and-turn count.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer access token issued by POST /v1/tokens on auth-api.8slp.net. Unofficial.

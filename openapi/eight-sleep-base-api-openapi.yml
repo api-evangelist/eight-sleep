@@ -1,0 +1,117 @@
+openapi: 3.0.1
+info:
+  title: Eight Sleep Unofficial Community Alarms Base API
+  description: 'UNOFFICIAL, community-reverse-engineered specification of the Eight Sleep client API that powers the Eight Sleep mobile app. Eight Sleep does NOT publish an official public developer API. The endpoints documented here were derived from open-source projects - notably pyEight (https://github.com/mezz64/pyEight and https://github.com/lukas-clarke/pyEight) and the Home Assistant Eight Sleep integration (https://github.com/lukas-clarke/eight_sleep). They span three hosts: auth-api.8slp.net (OAuth2 token issuance), client-api.8slp.net (user, device, and trends reads), and app-api.8slp.net (temperature, away mode, base, alarms, and routines control). These endpoints are undocumented, unsupported, and may change or break without notice. Use only with your own Eight Sleep account and credentials.'
+  contact:
+    name: Eight Sleep
+    url: https://www.eightsleep.com
+  version: unofficial-v1
+servers:
+- url: https://auth-api.8slp.net
+  description: Authentication host (OAuth2 token issuance)
+- url: https://client-api.8slp.net
+  description: Client API host (user, device, trends reads)
+- url: https://app-api.8slp.net
+  description: App API host (temperature, away mode, base, alarms, routines)
+tags:
+- name: Base
+  description: Adjustable Base position control (unofficial).
+paths:
+  /v1/users/{userId}/base:
+    get:
+      operationId: getBase
+      tags:
+      - Base
+      summary: Get adjustable Base state (unofficial)
+      description: UNOFFICIAL read against app-api.8slp.net returning the current head and feet angles and preset of the adjustable Base.
+      servers:
+      - url: https://app-api.8slp.net
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: Base state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseState'
+        '401':
+          description: Missing or expired token.
+  /v1/users/{userId}/base/angle:
+    post:
+      operationId: setBaseAngle
+      tags:
+      - Base
+      summary: Set adjustable Base angles or preset (unofficial)
+      description: UNOFFICIAL write against app-api.8slp.net that sets the head and feet angles of the adjustable Base, or applies a named preset such as flat, relax, sleep, or reading.
+      servers:
+      - url: https://app-api.8slp.net
+      security:
+      - bearerAuth: []
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BaseAngleUpdate'
+      responses:
+        '200':
+          description: Updated Base state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseState'
+        '401':
+          description: Missing or expired token.
+components:
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      description: Eight Sleep user identifier.
+      schema:
+        type: string
+  schemas:
+    BaseState:
+      type: object
+      properties:
+        currentState:
+          type: object
+          properties:
+            type:
+              type: string
+        leg:
+          type: integer
+          description: Feet (leg) angle in degrees.
+        torso:
+          type: integer
+          description: Head (torso) angle in degrees.
+        preset:
+          type: string
+    BaseAngleUpdate:
+      type: object
+      properties:
+        torso:
+          type: integer
+          description: Head (torso) angle in degrees.
+        leg:
+          type: integer
+          description: Feet (leg) angle in degrees.
+        preset:
+          type: string
+          enum:
+          - flat
+          - sleep
+          - relax
+          - reading
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer access token issued by POST /v1/tokens on auth-api.8slp.net. Unofficial.
