@@ -10,7 +10,20 @@ description: Eight Sleep builds the Pod, a temperature-regulating smart mattress
   Sleep mobile app and is used by open-source projects such as pyEight and the Home
   Assistant Eight Sleep integration. Endpoints can change without notice and are not
   supported by Eight Sleep.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/eight-sleep.png
 tags:
 - Sleep
 - IoT
@@ -22,132 +35,118 @@ created: '2026-06-20'
 modified: '2026-06-20'
 specificationVersion: '0.19'
 apis:
-- aid: eight-sleep:eight-sleep-authentication-api
-  name: Eight Sleep Authentication API
-  tags:
-  - Authentication
-  - OAuth2
-  - Tokens
-  - Unofficial
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://github.com/lukas-clarke/eight_sleep
-  baseURL: https://auth-api.8slp.net/v1
-  properties:
-  - url: https://github.com/lukas-clarke/eight_sleep
-    type: Documentation
-  - url: openapi/eight-sleep-openapi.yml
-    type: OpenAPI
-  description: UNOFFICIAL, community-reverse-engineered OAuth2 password-grant token
-    endpoint (POST /v1/tokens) on auth-api.8slp.net that issues bearer access and
-    refresh tokens for the Eight Sleep mobile app. Not an official public API.
-- aid: eight-sleep:eight-sleep-user-api
-  name: Eight Sleep User API
-  tags:
-  - User
-  - Profile
-  - Unofficial
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://github.com/mezz64/pyEight
-  baseURL: https://client-api.8slp.net/v1
-  properties:
-  - url: https://github.com/mezz64/pyEight
-    type: Documentation
-  - url: openapi/eight-sleep-openapi.yml
-    type: OpenAPI
-  description: UNOFFICIAL community client endpoints for the current user (GET /v1/users/me)
-    and individual users (GET /v1/users/{userId}), returning profile, device
-    assignment, and side data. Reverse-engineered, not officially supported.
-- aid: eight-sleep:eight-sleep-device-api
-  name: Eight Sleep Device API
-  tags:
-  - Device
-  - Pod
-  - Unofficial
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://github.com/mezz64/pyEight
-  baseURL: https://client-api.8slp.net/v1
-  properties:
-  - url: https://github.com/mezz64/pyEight
-    type: Documentation
-  - url: openapi/eight-sleep-openapi.yml
-    type: OpenAPI
-  description: UNOFFICIAL community client endpoint (GET /v1/devices/{deviceId}) that
-    returns Pod device state, online status, firmware, and bed-side (leftUserId,
-    rightUserId, awaySides) assignment. Reverse-engineered, not officially supported.
-- aid: eight-sleep:eight-sleep-temperature-api
-  name: Eight Sleep Temperature API
-  tags:
-  - Temperature
-  - Heating
-  - Away Mode
-  - Unofficial
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://github.com/lukas-clarke/pyEight
-  baseURL: https://app-api.8slp.net/v1
-  properties:
-  - url: https://github.com/lukas-clarke/pyEight
-    type: Documentation
-  - url: openapi/eight-sleep-openapi.yml
-    type: OpenAPI
-  description: UNOFFICIAL community app-API endpoints to read and set a user's heating
-    level (GET/PUT /v1/users/{userId}/temperature) on a unit-less -100..100 scale
-    and toggle away mode (PUT /v1/users/{userId}/away-mode). Reverse-engineered, not
-    officially supported.
-- aid: eight-sleep:eight-sleep-trends-api
-  name: Eight Sleep Trends API
-  tags:
-  - Trends
-  - Sleep Tracking
-  - Biometrics
-  - Unofficial
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://github.com/mezz64/pyEight
-  baseURL: https://client-api.8slp.net/v1
-  properties:
-  - url: https://github.com/mezz64/pyEight
-    type: Documentation
-  - url: openapi/eight-sleep-openapi.yml
-    type: OpenAPI
-  description: UNOFFICIAL community client endpoint (GET /v1/users/{userId}/trends)
-    returning per-night sleep trend data - sleep score, stage breakdown, heart rate,
-    HRV, respiratory rate, and toss-and-turn metrics. Reverse-engineered, not
-    officially supported.
-- aid: eight-sleep:eight-sleep-base-api
-  name: Eight Sleep Base API
-  tags:
-  - Base
-  - Adjustable
-  - Position
-  - Unofficial
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://github.com/lukas-clarke/pyEight
-  baseURL: https://app-api.8slp.net/v1
-  properties:
-  - url: https://github.com/lukas-clarke/pyEight
-    type: Documentation
-  - url: openapi/eight-sleep-openapi.yml
-    type: OpenAPI
-  description: UNOFFICIAL community app-API endpoints for the adjustable Base - read
-    state (GET /v1/users/{userId}/base) and set head/feet angles or presets (POST
-    /v1/users/{userId}/base/angle). Reverse-engineered, not officially supported.
 - aid: eight-sleep:eight-sleep-alarms-api
   name: Eight Sleep Alarms API
+  description: Alarm and routine reads and control (unofficial).
+  humanURL: https://github.com/lukas-clarke/eight_sleep
+  baseURL: https://auth-api.8slp.net/v1
   tags:
   - Alarms
-  - Routines
-  - Unofficial
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://github.com/lukas-clarke/pyEight
-  baseURL: https://app-api.8slp.net/v1
   properties:
-  - url: https://github.com/lukas-clarke/pyEight
-    type: Documentation
-  - url: openapi/eight-sleep-openapi.yml
-    type: OpenAPI
-  description: UNOFFICIAL community app-API endpoints to list alarms and routines
-    (GET /v1/users/{userId}/alarms, GET /v1/users/{userId}/routines) and update,
-    snooze, stop, or dismiss them. Thermal/vibration wake-up alarms are part of
-    Autopilot. Reverse-engineered, not officially supported.
+  - type: OpenAPI
+    url: openapi/eight-sleep-alarms-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/lukas-clarke/eight_sleep
+  - type: Documentation
+    url: https://github.com/mezz64/pyEight
+  - type: Documentation
+    url: https://github.com/lukas-clarke/pyEight
+- aid: eight-sleep:eight-sleep-authentication-api
+  name: Eight Sleep Authentication API
+  description: OAuth2 password-grant token issuance (unofficial).
+  humanURL: https://github.com/lukas-clarke/eight_sleep
+  baseURL: https://auth-api.8slp.net/v1
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/eight-sleep-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/lukas-clarke/eight_sleep
+  - type: Documentation
+    url: https://github.com/mezz64/pyEight
+  - type: Documentation
+    url: https://github.com/lukas-clarke/pyEight
+- aid: eight-sleep:eight-sleep-base-api
+  name: Eight Sleep Base API
+  description: Adjustable Base position control (unofficial).
+  humanURL: https://github.com/lukas-clarke/eight_sleep
+  baseURL: https://auth-api.8slp.net/v1
+  tags:
+  - Base
+  properties:
+  - type: OpenAPI
+    url: openapi/eight-sleep-base-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/lukas-clarke/eight_sleep
+  - type: Documentation
+    url: https://github.com/mezz64/pyEight
+  - type: Documentation
+    url: https://github.com/lukas-clarke/pyEight
+- aid: eight-sleep:eight-sleep-device-api
+  name: Eight Sleep Device API
+  description: Pod device state and side assignment reads (unofficial).
+  humanURL: https://github.com/lukas-clarke/eight_sleep
+  baseURL: https://auth-api.8slp.net/v1
+  tags:
+  - Device
+  properties:
+  - type: OpenAPI
+    url: openapi/eight-sleep-device-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/lukas-clarke/eight_sleep
+  - type: Documentation
+    url: https://github.com/mezz64/pyEight
+  - type: Documentation
+    url: https://github.com/lukas-clarke/pyEight
+- aid: eight-sleep:eight-sleep-temperature-api
+  name: Eight Sleep Temperature API
+  description: Heating level and away-mode control (unofficial).
+  humanURL: https://github.com/lukas-clarke/eight_sleep
+  baseURL: https://auth-api.8slp.net/v1
+  tags:
+  - Temperature
+  properties:
+  - type: OpenAPI
+    url: openapi/eight-sleep-temperature-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/lukas-clarke/eight_sleep
+  - type: Documentation
+    url: https://github.com/mezz64/pyEight
+  - type: Documentation
+    url: https://github.com/lukas-clarke/pyEight
+- aid: eight-sleep:eight-sleep-trends-api
+  name: Eight Sleep Trends API
+  description: Per-night sleep and biometric trend reads (unofficial).
+  humanURL: https://github.com/lukas-clarke/eight_sleep
+  baseURL: https://auth-api.8slp.net/v1
+  tags:
+  - Trends
+  properties:
+  - type: OpenAPI
+    url: openapi/eight-sleep-trends-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/lukas-clarke/eight_sleep
+  - type: Documentation
+    url: https://github.com/mezz64/pyEight
+  - type: Documentation
+    url: https://github.com/lukas-clarke/pyEight
+- aid: eight-sleep:eight-sleep-user-api
+  name: Eight Sleep User API
+  description: Current and individual user profile reads (unofficial).
+  humanURL: https://github.com/lukas-clarke/eight_sleep
+  baseURL: https://auth-api.8slp.net/v1
+  tags:
+  - User
+  properties:
+  - type: OpenAPI
+    url: openapi/eight-sleep-user-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/lukas-clarke/eight_sleep
+  - type: Documentation
+    url: https://github.com/mezz64/pyEight
+  - type: Documentation
+    url: https://github.com/lukas-clarke/pyEight
 common:
 - type: AgenticAccess
   url: agentic-access/eight-sleep-agentic-access.yml
