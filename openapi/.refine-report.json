@@ -1,0 +1,26 @@
+{
+  "provider": "eight-sleep",
+  "sources": [
+    "eight-sleep-alarms-api-openapi.yml",
+    "eight-sleep-authentication-api-openapi.yml",
+    "eight-sleep-base-api-openapi.yml",
+    "eight-sleep-device-api-openapi.yml",
+    "eight-sleep-temperature-api-openapi.yml",
+    "eight-sleep-trends-api-openapi.yml",
+    "eight-sleep-user-api-openapi.yml"
+  ],
+  "outputs": [
+    "eight-sleep-alarms-api-openapi.yml",
+    "eight-sleep-authentication-api-openapi.yml",
+    "eight-sleep-base-api-openapi.yml",
+    "eight-sleep-device-api-openapi.yml",
+    "eight-sleep-temperature-api-openapi.yml",
+    "eight-sleep-trends-api-openapi.yml",
+    "eight-sleep-user-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

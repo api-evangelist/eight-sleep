@@ -1,0 +1,680 @@
+openapi: 3.0.1
+info:
+  title: Eight Sleep Unofficial Community API
+  description: >-
+    UNOFFICIAL, community-reverse-engineered specification of the Eight Sleep
+    client API that powers the Eight Sleep mobile app. Eight Sleep does NOT
+    publish an official public developer API. The endpoints documented here
+    were derived from open-source projects - notably pyEight
+    (https://github.com/mezz64/pyEight and https://github.com/lukas-clarke/pyEight)
+    and the Home Assistant Eight Sleep integration
+    (https://github.com/lukas-clarke/eight_sleep). They span three hosts:
+    auth-api.8slp.net (OAuth2 token issuance), client-api.8slp.net (user,
+    device, and trends reads), and app-api.8slp.net (temperature, away mode,
+    base, alarms, and routines control). These endpoints are undocumented,
+    unsupported, and may change or break without notice. Use only with your
+    own Eight Sleep account and credentials.
+  contact:
+    name: Eight Sleep
+    url: https://www.eightsleep.com
+  version: 'unofficial-v1'
+servers:
+  - url: https://auth-api.8slp.net
+    description: Authentication host (OAuth2 token issuance)
+  - url: https://client-api.8slp.net
+    description: Client API host (user, device, trends reads)
+  - url: https://app-api.8slp.net
+    description: App API host (temperature, away mode, base, alarms, routines)
+tags:
+  - name: Authentication
+    description: OAuth2 password-grant token issuance (unofficial).
+  - name: User
+    description: Current and individual user profile reads (unofficial).
+  - name: Device
+    description: Pod device state and side assignment reads (unofficial).
+  - name: Temperature
+    description: Heating level and away-mode control (unofficial).
+  - name: Trends
+    description: Per-night sleep and biometric trend reads (unofficial).
+  - name: Base
+    description: Adjustable Base position control (unofficial).
+  - name: Alarms
+    description: Alarm and routine reads and control (unofficial).
+paths:
+  /v1/tokens:
+    post:
+      operationId: createToken
+      tags:
+        - Authentication
+      summary: Issue an OAuth2 access token (unofficial)
+      description: >-
+        UNOFFICIAL OAuth2 password-grant request against auth-api.8slp.net.
+        Exchanges an account email and password (plus a client_id and
+        client_secret captured from the mobile app) for a bearer access token
+        and refresh token. Not an official, supported, or documented endpoint.
+      servers:
+        - url: https://auth-api.8slp.net
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+      responses:
+        '200':
+          description: Access and refresh tokens issued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          description: Invalid credentials.
+  /v1/users/me:
+    get:
+      operationId: getCurrentUser
+      tags:
+        - User
+      summary: Get the current user (unofficial)
+      description: >-
+        UNOFFICIAL read against client-api.8slp.net returning the authenticated
+        user's profile, current device id, and bed-side assignment.
+      servers:
+        - url: https://client-api.8slp.net
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Current user object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '401':
+          description: Missing or expired token.
+  /v1/users/{userId}:
+    get:
+      operationId: getUser
+      tags:
+        - User
+      summary: Get a user by id (unofficial)
+      description: >-
+        UNOFFICIAL read against client-api.8slp.net returning a single user's
+        profile by id (e.g. the left or right sleeper on a Pod).
+      servers:
+        - url: https://client-api.8slp.net
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: User object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '401':
+          description: Missing or expired token.
+        '404':
+          description: User not found.
+  /v1/devices/{deviceId}:
+    get:
+      operationId: getDevice
+      tags:
+        - Device
+      summary: Get device state (unofficial)
+      description: >-
+        UNOFFICIAL read against client-api.8slp.net returning Pod device state,
+        online status, firmware, and side assignment. Community clients commonly
+        request a filtered view via the `filter` query parameter (for example
+        `leftUserId,rightUserId,awaySides`).
+      servers:
+        - url: https://client-api.8slp.net
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/DeviceId'
+        - name: filter
+          in: query
+          required: false
+          description: Comma-separated list of device fields to return.
+          schema:
+            type: string
+            example: leftUserId,rightUserId,awaySides
+      responses:
+        '200':
+          description: Device object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceResponse'
+        '401':
+          description: Missing or expired token.
+        '404':
+          description: Device not found.
+  /v1/users/{userId}/temperature:
+    get:
+      operationId: getTemperature
+      tags:
+        - Temperature
+      summary: Get current heating level (unofficial)
+      description: >-
+        UNOFFICIAL read against app-api.8slp.net returning the user's current
+        heating/cooling level. The level is unit-less on a -100..100 scale where
+        negative cools and positive warms.
+      servers:
+        - url: https://app-api.8slp.net
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: Current temperature state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureState'
+        '401':
+          description: Missing or expired token.
+    put:
+      operationId: setTemperature
+      tags:
+        - Temperature
+      summary: Set heating level (unofficial)
+      description: >-
+        UNOFFICIAL write against app-api.8slp.net that sets the user's
+        heating/cooling level and on/off state. Level is unit-less on a
+        -100..100 scale.
+      servers:
+        - url: https://app-api.8slp.net
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemperatureUpdate'
+      responses:
+        '200':
+          description: Updated temperature state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureState'
+        '401':
+          description: Missing or expired token.
+  /v1/users/{userId}/away-mode:
+    put:
+      operationId: setAwayMode
+      tags:
+        - Temperature
+      summary: Set away mode (unofficial)
+      description: >-
+        UNOFFICIAL write against app-api.8slp.net that starts or ends away mode
+        for a user's side of the Pod.
+      servers:
+        - url: https://app-api.8slp.net
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AwayModeUpdate'
+      responses:
+        '200':
+          description: Updated away-mode state.
+        '401':
+          description: Missing or expired token.
+  /v1/users/{userId}/trends:
+    get:
+      operationId: getTrends
+      tags:
+        - Trends
+      summary: Get sleep trends (unofficial)
+      description: >-
+        UNOFFICIAL read against client-api.8slp.net returning per-night sleep
+        trend data - sleep score, sleep-stage breakdown, heart rate, HRV,
+        respiratory rate, and toss-and-turn metrics - over a date range.
+      servers:
+        - url: https://client-api.8slp.net
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+        - name: tz
+          in: query
+          required: false
+          description: IANA timezone used to bucket nights (e.g. America/New_York).
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: false
+          description: Start date (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: false
+          description: End date (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Trends payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrendsResponse'
+        '401':
+          description: Missing or expired token.
+  /v1/users/{userId}/base:
+    get:
+      operationId: getBase
+      tags:
+        - Base
+      summary: Get adjustable Base state (unofficial)
+      description: >-
+        UNOFFICIAL read against app-api.8slp.net returning the current head and
+        feet angles and preset of the adjustable Base.
+      servers:
+        - url: https://app-api.8slp.net
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: Base state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseState'
+        '401':
+          description: Missing or expired token.
+  /v1/users/{userId}/base/angle:
+    post:
+      operationId: setBaseAngle
+      tags:
+        - Base
+      summary: Set adjustable Base angles or preset (unofficial)
+      description: >-
+        UNOFFICIAL write against app-api.8slp.net that sets the head and feet
+        angles of the adjustable Base, or applies a named preset such as flat,
+        relax, sleep, or reading.
+      servers:
+        - url: https://app-api.8slp.net
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BaseAngleUpdate'
+      responses:
+        '200':
+          description: Updated Base state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseState'
+        '401':
+          description: Missing or expired token.
+  /v1/users/{userId}/alarms:
+    get:
+      operationId: getAlarms
+      tags:
+        - Alarms
+      summary: List alarms (unofficial)
+      description: >-
+        UNOFFICIAL read against app-api.8slp.net returning the user's configured
+        thermal/vibration wake-up alarms.
+      servers:
+        - url: https://app-api.8slp.net
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: Alarm list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlarmsResponse'
+        '401':
+          description: Missing or expired token.
+  /v1/users/{userId}/alarms/{alarmId}:
+    put:
+      operationId: updateAlarm
+      tags:
+        - Alarms
+      summary: Update an alarm (unofficial)
+      description: >-
+        UNOFFICIAL write against app-api.8slp.net that enables, disables, or
+        modifies a single alarm.
+      servers:
+        - url: https://app-api.8slp.net
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+        - name: alarmId
+          in: path
+          required: true
+          description: Alarm identifier.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Alarm'
+      responses:
+        '200':
+          description: Updated alarm.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alarm'
+        '401':
+          description: Missing or expired token.
+  /v1/users/{userId}/routines:
+    get:
+      operationId: getRoutines
+      tags:
+        - Alarms
+      summary: Get routines (unofficial)
+      description: >-
+        UNOFFICIAL read against app-api.8slp.net returning the user's routines,
+        which contain alarm and bedtime/wake configuration in newer app builds.
+      servers:
+        - url: https://app-api.8slp.net
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: Routines payload.
+        '401':
+          description: Missing or expired token.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        Bearer access token issued by POST /v1/tokens on auth-api.8slp.net.
+        Unofficial.
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      description: Eight Sleep user identifier.
+      schema:
+        type: string
+    DeviceId:
+      name: deviceId
+      in: path
+      required: true
+      description: Eight Sleep Pod device identifier.
+      schema:
+        type: string
+  schemas:
+    TokenRequest:
+      type: object
+      required:
+        - client_id
+        - client_secret
+        - grant_type
+        - username
+        - password
+      properties:
+        client_id:
+          type: string
+          description: App client id captured from the Eight Sleep mobile app.
+        client_secret:
+          type: string
+          description: App client secret captured from the Eight Sleep mobile app.
+        grant_type:
+          type: string
+          example: password
+        username:
+          type: string
+          description: Account email address.
+        password:
+          type: string
+          format: password
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+        token_type:
+          type: string
+          example: Bearer
+        expires_in:
+          type: integer
+          description: Token lifetime in seconds.
+        userId:
+          type: string
+    UserResponse:
+      type: object
+      properties:
+        user:
+          type: object
+          properties:
+            userId:
+              type: string
+            email:
+              type: string
+            firstName:
+              type: string
+            lastName:
+              type: string
+            currentDevice:
+              type: object
+              properties:
+                id:
+                  type: string
+                side:
+                  type: string
+                  enum:
+                    - left
+                    - right
+                    - solo
+    DeviceResponse:
+      type: object
+      properties:
+        result:
+          type: object
+          properties:
+            deviceId:
+              type: string
+            online:
+              type: boolean
+            firmwareVersion:
+              type: string
+            leftUserId:
+              type: string
+            rightUserId:
+              type: string
+            awaySides:
+              type: object
+              additionalProperties:
+                type: boolean
+    TemperatureState:
+      type: object
+      properties:
+        currentLevel:
+          type: integer
+          minimum: -100
+          maximum: 100
+          description: Unit-less heating/cooling level (-100 cool .. 100 warm).
+        currentState:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - smart
+                - off
+        smart:
+          type: object
+          description: Smart (Autopilot) heating levels by sleep stage.
+          properties:
+            bedTimeLevel:
+              type: integer
+            initialSleepLevel:
+              type: integer
+            finalSleepLevel:
+              type: integer
+    TemperatureUpdate:
+      type: object
+      properties:
+        currentLevel:
+          type: integer
+          minimum: -100
+          maximum: 100
+        currentState:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - smart
+                - off
+    AwayModeUpdate:
+      type: object
+      required:
+        - awayPeriod
+      properties:
+        awayPeriod:
+          type: object
+          properties:
+            action:
+              type: string
+              enum:
+                - start
+                - end
+    TrendsResponse:
+      type: object
+      properties:
+        days:
+          type: array
+          items:
+            type: object
+            properties:
+              day:
+                type: string
+                format: date
+              score:
+                type: integer
+                description: Sleep fitness score.
+              sleepDuration:
+                type: integer
+                description: Total sleep in seconds.
+              presenceDuration:
+                type: integer
+              sleepStages:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    stage:
+                      type: string
+                      enum:
+                        - awake
+                        - light
+                        - deep
+                        - rem
+                        - out
+                    duration:
+                      type: integer
+              heartRate:
+                type: number
+              hrv:
+                type: number
+              respiratoryRate:
+                type: number
+              tnt:
+                type: integer
+                description: Toss-and-turn count.
+    BaseState:
+      type: object
+      properties:
+        currentState:
+          type: object
+          properties:
+            type:
+              type: string
+        leg:
+          type: integer
+          description: Feet (leg) angle in degrees.
+        torso:
+          type: integer
+          description: Head (torso) angle in degrees.
+        preset:
+          type: string
+    BaseAngleUpdate:
+      type: object
+      properties:
+        torso:
+          type: integer
+          description: Head (torso) angle in degrees.
+        leg:
+          type: integer
+          description: Feet (leg) angle in degrees.
+        preset:
+          type: string
+          enum:
+            - flat
+            - sleep
+            - relax
+            - reading
+    AlarmsResponse:
+      type: object
+      properties:
+        alarms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Alarm'
+    Alarm:
+      type: object
+      properties:
+        id:
+          type: string
+        enabled:
+          type: boolean
+        time:
+          type: string
+          description: Local alarm time (HH:MM).
+        days:
+          type: array
+          items:
+            type: string
+        vibrationEnabled:
+          type: boolean
+        thermalEnabled:
+          type: boolean
+        snoozeDuration:
+          type: integer
