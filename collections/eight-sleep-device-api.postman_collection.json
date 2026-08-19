@@ -1,0 +1,270 @@
+{
+  "item": [
+    {
+      "id": "814a3ef5-24d2-42d1-92a3-ab4160eb9005",
+      "name": "Device",
+      "description": {
+        "content": "Pod device state and side assignment reads (unofficial).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a57b6563-97b6-4c4c-ac20-573b3f50711a",
+          "name": "Get device state (unofficial)",
+          "request": {
+            "name": "Get device state (unofficial)",
+            "description": {
+              "content": "UNOFFICIAL read against client-api.8slp.net returning Pod device state, online status, firmware, and side assignment. Community clients commonly request a filtered view via the `filter` query parameter (for example `leftUserId,rightUserId,awaySides`).",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v1",
+                "devices",
+                ":deviceId"
+              ],
+              "host": [
+                "client-api",
+                "8slp",
+                "net"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Comma-separated list of device fields to return."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) Eight Sleep Pod device identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "27a9b22b-b49c-4d23-a51a-cf2f6176f750",
+              "name": "Device object.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "devices",
+                    ":deviceId"
+                  ],
+                  "host": [
+                    "client-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "leftUserId,rightUserId,awaySides"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Eight Sleep Pod device identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": {\n    \"deviceId\": \"string\",\n    \"online\": false,\n    \"firmwareVersion\": \"string\",\n    \"leftUserId\": \"string\",\n    \"rightUserId\": \"string\",\n    \"awaySides\": {\n      \"key_0\": true,\n      \"key_1\": true\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34e7fe68-9efe-4f34-a81b-97aeaa769b9a",
+              "name": "Missing or expired token.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "devices",
+                    ":deviceId"
+                  ],
+                  "host": [
+                    "client-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "leftUserId,rightUserId,awaySides"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Eight Sleep Pod device identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "227ac2a4-8282-4d8f-822d-1e00189cd48a",
+              "name": "Device not found.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "devices",
+                    ":deviceId"
+                  ],
+                  "host": [
+                    "client-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "leftUserId,rightUserId,awaySides"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) Eight Sleep Pod device identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://auth-api.8slp.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "fd2adfab-9263-47ea-ad1a-6432a3692bad",
+    "name": "Eight Sleep Unofficial Community Alarms Device API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "UNOFFICIAL, community-reverse-engineered specification of the Eight Sleep client API that powers the Eight Sleep mobile app. Eight Sleep does NOT publish an official public developer API. The endpoints documented here were derived from open-source projects - notably pyEight (https://github.com/mezz64/pyEight and https://github.com/lukas-clarke/pyEight) and the Home Assistant Eight Sleep integration (https://github.com/lukas-clarke/eight_sleep). They span three hosts: auth-api.8slp.net (OAuth2 token issuance), client-api.8slp.net (user, device, and trends reads), and app-api.8slp.net (temperature, away mode, base, alarms, and routines control). These endpoints are undocumented, unsupported, and may change or break without notice. Use only with your own Eight Sleep account and credentials.\n\nContact Support:\n Name: Eight Sleep",
+      "type": "text/plain"
+    }
+  }
+}

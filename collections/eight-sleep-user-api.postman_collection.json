@@ -1,0 +1,388 @@
+{
+  "item": [
+    {
+      "id": "ec0271cc-5c23-4ab7-a64f-433d1381e2e6",
+      "name": "User",
+      "description": {
+        "content": "Current and individual user profile reads (unofficial).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2c098b97-a06b-4593-92f4-e65bdd49026d",
+          "name": "Get the current user (unofficial)",
+          "request": {
+            "name": "Get the current user (unofficial)",
+            "description": {
+              "content": "UNOFFICIAL read against client-api.8slp.net returning the authenticated user's profile, current device id, and bed-side assignment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v1",
+                "users",
+                "me"
+              ],
+              "host": [
+                "client-api",
+                "8slp",
+                "net"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8b503395-b569-469e-b6a6-153346b58df2",
+              "name": "Current user object.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    "me"
+                  ],
+                  "host": [
+                    "client-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"user\": {\n    \"userId\": \"string\",\n    \"email\": \"string\",\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"currentDevice\": {\n      \"id\": \"string\",\n      \"side\": \"solo\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5e9faaa-5808-4d19-a888-ab4c8d9818a9",
+              "name": "Missing or expired token.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    "me"
+                  ],
+                  "host": [
+                    "client-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fd3e3c88-47ae-4920-8a97-0477bfcb577f",
+          "name": "Get a user by id (unofficial)",
+          "request": {
+            "name": "Get a user by id (unofficial)",
+            "description": {
+              "content": "UNOFFICIAL read against client-api.8slp.net returning a single user's profile by id (e.g. the left or right sleeper on a Pod).",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v1",
+                "users",
+                ":userId"
+              ],
+              "host": [
+                "client-api",
+                "8slp",
+                "net"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userId",
+                  "description": "(Required) Eight Sleep user identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e6bd0751-2170-4820-a7d1-46f0b6a2e3a7",
+              "name": "User object.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "client-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Eight Sleep user identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"user\": {\n    \"userId\": \"string\",\n    \"email\": \"string\",\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"currentDevice\": {\n      \"id\": \"string\",\n      \"side\": \"solo\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf2a09dd-911a-435b-8f1e-ddfa3db8f4a5",
+              "name": "Missing or expired token.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "client-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Eight Sleep user identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "37e650db-06ae-40e7-870f-7b910c6d7894",
+              "name": "User not found.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "client-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Eight Sleep user identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://auth-api.8slp.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "bfd40638-1993-4953-a581-de72f39e3f29",
+    "name": "Eight Sleep Unofficial Community Alarms User API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "UNOFFICIAL, community-reverse-engineered specification of the Eight Sleep client API that powers the Eight Sleep mobile app. Eight Sleep does NOT publish an official public developer API. The endpoints documented here were derived from open-source projects - notably pyEight (https://github.com/mezz64/pyEight and https://github.com/lukas-clarke/pyEight) and the Home Assistant Eight Sleep integration (https://github.com/lukas-clarke/eight_sleep). They span three hosts: auth-api.8slp.net (OAuth2 token issuance), client-api.8slp.net (user, device, and trends reads), and app-api.8slp.net (temperature, away mode, base, alarms, and routines control). These endpoints are undocumented, unsupported, and may change or break without notice. Use only with your own Eight Sleep account and credentials.\n\nContact Support:\n Name: Eight Sleep",
+      "type": "text/plain"
+    }
+  }
+}

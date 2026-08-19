@@ -1,0 +1,583 @@
+{
+  "item": [
+    {
+      "id": "ccb65332-7540-4f21-add7-369246408885",
+      "name": "Temperature",
+      "description": {
+        "content": "Heating level and away-mode control (unofficial).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "69f3668d-9800-4de1-b207-f4f06c02e294",
+          "name": "Get current heating level (unofficial)",
+          "request": {
+            "name": "Get current heating level (unofficial)",
+            "description": {
+              "content": "UNOFFICIAL read against app-api.8slp.net returning the user's current heating/cooling level. The level is unit-less on a -100..100 scale where negative cools and positive warms.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v1",
+                "users",
+                ":userId",
+                "temperature"
+              ],
+              "host": [
+                "app-api",
+                "8slp",
+                "net"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userId",
+                  "description": "(Required) Eight Sleep user identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "107e135b-0976-4e7b-8fca-d400744db7a2",
+              "name": "Current temperature state.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    ":userId",
+                    "temperature"
+                  ],
+                  "host": [
+                    "app-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Eight Sleep user identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"currentLevel\": 69,\n  \"currentState\": {\n    \"type\": \"smart\"\n  },\n  \"smart\": {\n    \"bedTimeLevel\": 1996,\n    \"initialSleepLevel\": 5693,\n    \"finalSleepLevel\": 1493\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43ca0441-66d0-4fd0-8b66-15253ff55a1f",
+              "name": "Missing or expired token.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    ":userId",
+                    "temperature"
+                  ],
+                  "host": [
+                    "app-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Eight Sleep user identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b24f34f9-ce28-48ba-91eb-6465df23afc1",
+          "name": "Set heating level (unofficial)",
+          "request": {
+            "name": "Set heating level (unofficial)",
+            "description": {
+              "content": "UNOFFICIAL write against app-api.8slp.net that sets the user's heating/cooling level and on/off state. Level is unit-less on a -100..100 scale.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v1",
+                "users",
+                ":userId",
+                "temperature"
+              ],
+              "host": [
+                "app-api",
+                "8slp",
+                "net"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userId",
+                  "description": "(Required) Eight Sleep user identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currentLevel\": \"<integer>\",\n  \"currentState\": {\n    \"type\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f650ce2a-e987-4074-ba5b-422deea083af",
+              "name": "Updated temperature state.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    ":userId",
+                    "temperature"
+                  ],
+                  "host": [
+                    "app-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Eight Sleep user identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currentLevel\": \"<integer>\",\n  \"currentState\": {\n    \"type\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"currentLevel\": 69,\n  \"currentState\": {\n    \"type\": \"smart\"\n  },\n  \"smart\": {\n    \"bedTimeLevel\": 1996,\n    \"initialSleepLevel\": 5693,\n    \"finalSleepLevel\": 1493\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3cadc3f-3a65-458d-ada2-ae0dae519aae",
+              "name": "Missing or expired token.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    ":userId",
+                    "temperature"
+                  ],
+                  "host": [
+                    "app-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Eight Sleep user identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currentLevel\": \"<integer>\",\n  \"currentState\": {\n    \"type\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4342259e-0115-4d14-9671-0cd26f5860e2",
+          "name": "Set away mode (unofficial)",
+          "request": {
+            "name": "Set away mode (unofficial)",
+            "description": {
+              "content": "UNOFFICIAL write against app-api.8slp.net that starts or ends away mode for a user's side of the Pod.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v1",
+                "users",
+                ":userId",
+                "away-mode"
+              ],
+              "host": [
+                "app-api",
+                "8slp",
+                "net"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userId",
+                  "description": "(Required) Eight Sleep user identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"awayPeriod\": {\n    \"action\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "15a9f737-86d7-46a9-93a1-0a25fab32f0d",
+              "name": "Updated away-mode state.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    ":userId",
+                    "away-mode"
+                  ],
+                  "host": [
+                    "app-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Eight Sleep user identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"awayPeriod\": {\n    \"action\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ae0e9ac7-b11e-4ba1-9969-bb0514caaa29",
+              "name": "Missing or expired token.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    ":userId",
+                    "away-mode"
+                  ],
+                  "host": [
+                    "app-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Eight Sleep user identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"awayPeriod\": {\n    \"action\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://auth-api.8slp.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "321212b8-a443-4e39-8ce2-f0023a736994",
+    "name": "Eight Sleep Unofficial Community Alarms Temperature API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "UNOFFICIAL, community-reverse-engineered specification of the Eight Sleep client API that powers the Eight Sleep mobile app. Eight Sleep does NOT publish an official public developer API. The endpoints documented here were derived from open-source projects - notably pyEight (https://github.com/mezz64/pyEight and https://github.com/lukas-clarke/pyEight) and the Home Assistant Eight Sleep integration (https://github.com/lukas-clarke/eight_sleep). They span three hosts: auth-api.8slp.net (OAuth2 token issuance), client-api.8slp.net (user, device, and trends reads), and app-api.8slp.net (temperature, away mode, base, alarms, and routines control). These endpoints are undocumented, unsupported, and may change or break without notice. Use only with your own Eight Sleep account and credentials.\n\nContact Support:\n Name: Eight Sleep",
+      "type": "text/plain"
+    }
+  }
+}

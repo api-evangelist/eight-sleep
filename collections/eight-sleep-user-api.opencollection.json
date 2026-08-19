@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Eight Sleep Unofficial Community Alarms User API",
+    "version": "unofficial-v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the current user (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://auth-api.8slp.net/v1/users/me",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "UNOFFICIAL read against client-api.8slp.net returning the authenticated user's profile, current device id, and bed-side assignment."
+        },
+        {
+          "info": {
+            "name": "Get a user by id (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://auth-api.8slp.net/v1/users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Eight Sleep user identifier."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "UNOFFICIAL read against client-api.8slp.net returning a single user's profile by id (e.g. the left or right sleeper on a Pod)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

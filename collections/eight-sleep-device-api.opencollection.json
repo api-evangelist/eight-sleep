@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Eight Sleep Unofficial Community Alarms Device API",
+    "version": "unofficial-v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Device",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get device state (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://auth-api.8slp.net/v1/devices/:deviceId",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "Eight Sleep Pod device identifier."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of device fields to return."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "UNOFFICIAL read against client-api.8slp.net returning Pod device state, online status, firmware, and side assignment. Community clients commonly request a filtered view via the `filter` query parameter (for example `leftUserId,rightUserId,awaySides`)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

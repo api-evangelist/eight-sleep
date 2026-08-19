@@ -1,0 +1,59 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Eight Sleep Unofficial Community Alarms Trends API",
+    "version": "unofficial-v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Trends",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get sleep trends (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://auth-api.8slp.net/v1/users/:userId/trends",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Eight Sleep user identifier."
+              },
+              {
+                "name": "tz",
+                "value": "",
+                "type": "query",
+                "description": "IANA timezone used to bucket nights (e.g. America/New_York)."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start date (YYYY-MM-DD)."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End date (YYYY-MM-DD)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "UNOFFICIAL read against client-api.8slp.net returning per-night sleep trend data - sleep score, sleep-stage breakdown, heart rate, HRV, respiratory rate, and toss-and-turn metrics - over a date range."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

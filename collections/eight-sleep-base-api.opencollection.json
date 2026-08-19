@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Eight Sleep Unofficial Community Alarms Base API",
+    "version": "unofficial-v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Base",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get adjustable Base state (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://auth-api.8slp.net/v1/users/:userId/base",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Eight Sleep user identifier."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "UNOFFICIAL read against app-api.8slp.net returning the current head and feet angles and preset of the adjustable Base."
+        },
+        {
+          "info": {
+            "name": "Set adjustable Base angles or preset (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://auth-api.8slp.net/v1/users/:userId/base/angle",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Eight Sleep user identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "UNOFFICIAL write against app-api.8slp.net that sets the head and feet angles of the adjustable Base, or applies a named preset such as flat, relax, sleep, or reading."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,95 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Eight Sleep Unofficial Community Alarms Temperature API",
+    "version": "unofficial-v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Temperature",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get current heating level (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://auth-api.8slp.net/v1/users/:userId/temperature",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Eight Sleep user identifier."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "UNOFFICIAL read against app-api.8slp.net returning the user's current heating/cooling level. The level is unit-less on a -100..100 scale where negative cools and positive warms."
+        },
+        {
+          "info": {
+            "name": "Set heating level (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://auth-api.8slp.net/v1/users/:userId/temperature",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Eight Sleep user identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "UNOFFICIAL write against app-api.8slp.net that sets the user's heating/cooling level and on/off state. Level is unit-less on a -100..100 scale."
+        },
+        {
+          "info": {
+            "name": "Set away mode (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://auth-api.8slp.net/v1/users/:userId/away-mode",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Eight Sleep user identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "UNOFFICIAL write against app-api.8slp.net that starts or ends away mode for a user's side of the Pod."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

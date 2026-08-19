@@ -1,0 +1,576 @@
+{
+  "item": [
+    {
+      "id": "e723c0dc-4916-44d2-a5ec-52ed25254dab",
+      "name": "Alarms",
+      "description": {
+        "content": "Alarm and routine reads and control (unofficial).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dbf11aae-adf5-447f-9bd9-0b6ea8a2a846",
+          "name": "List alarms (unofficial)",
+          "request": {
+            "name": "List alarms (unofficial)",
+            "description": {
+              "content": "UNOFFICIAL read against app-api.8slp.net returning the user's configured thermal/vibration wake-up alarms.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v1",
+                "users",
+                ":userId",
+                "alarms"
+              ],
+              "host": [
+                "app-api",
+                "8slp",
+                "net"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userId",
+                  "description": "(Required) Eight Sleep user identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c87311ca-aba7-426f-8112-6d306479b485",
+              "name": "Alarm list.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    ":userId",
+                    "alarms"
+                  ],
+                  "host": [
+                    "app-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Eight Sleep user identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"alarms\": [\n    {\n      \"id\": \"string\",\n      \"enabled\": true,\n      \"time\": \"string\",\n      \"days\": [\n        \"string\",\n        \"string\"\n      ],\n      \"vibrationEnabled\": true,\n      \"thermalEnabled\": false,\n      \"snoozeDuration\": 790\n    },\n    {\n      \"id\": \"string\",\n      \"enabled\": false,\n      \"time\": \"string\",\n      \"days\": [\n        \"string\",\n        \"string\"\n      ],\n      \"vibrationEnabled\": true,\n      \"thermalEnabled\": true,\n      \"snoozeDuration\": 6265\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "884bcd32-912d-40a8-873d-576b54dd4357",
+              "name": "Missing or expired token.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    ":userId",
+                    "alarms"
+                  ],
+                  "host": [
+                    "app-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Eight Sleep user identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "48bd5268-ebe0-41cf-9688-78654bf9498f",
+          "name": "Update an alarm (unofficial)",
+          "request": {
+            "name": "Update an alarm (unofficial)",
+            "description": {
+              "content": "UNOFFICIAL write against app-api.8slp.net that enables, disables, or modifies a single alarm.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v1",
+                "users",
+                ":userId",
+                "alarms",
+                ":alarmId"
+              ],
+              "host": [
+                "app-api",
+                "8slp",
+                "net"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userId",
+                  "description": "(Required) Eight Sleep user identifier."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "alarmId",
+                  "description": "(Required) Alarm identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"enabled\": \"<boolean>\",\n  \"time\": \"<string>\",\n  \"days\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"vibrationEnabled\": \"<boolean>\",\n  \"thermalEnabled\": \"<boolean>\",\n  \"snoozeDuration\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4d1b45b6-0e36-4328-902c-218f10a3ba05",
+              "name": "Updated alarm.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    ":userId",
+                    "alarms",
+                    ":alarmId"
+                  ],
+                  "host": [
+                    "app-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Eight Sleep user identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "alarmId",
+                      "description": "(Required) Alarm identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"enabled\": \"<boolean>\",\n  \"time\": \"<string>\",\n  \"days\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"vibrationEnabled\": \"<boolean>\",\n  \"thermalEnabled\": \"<boolean>\",\n  \"snoozeDuration\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"<string>\",\n  \"enabled\": \"<boolean>\",\n  \"time\": \"<string>\",\n  \"days\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"vibrationEnabled\": \"<boolean>\",\n  \"thermalEnabled\": \"<boolean>\",\n  \"snoozeDuration\": \"<integer>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a3a2284-d432-4787-a36d-c2557d6e17a5",
+              "name": "Missing or expired token.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    ":userId",
+                    "alarms",
+                    ":alarmId"
+                  ],
+                  "host": [
+                    "app-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Eight Sleep user identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "alarmId",
+                      "description": "(Required) Alarm identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"enabled\": \"<boolean>\",\n  \"time\": \"<string>\",\n  \"days\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"vibrationEnabled\": \"<boolean>\",\n  \"thermalEnabled\": \"<boolean>\",\n  \"snoozeDuration\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "765e1fe7-8a41-46ca-babb-1f464b834a42",
+          "name": "Get routines (unofficial)",
+          "request": {
+            "name": "Get routines (unofficial)",
+            "description": {
+              "content": "UNOFFICIAL read against app-api.8slp.net returning the user's routines, which contain alarm and bedtime/wake configuration in newer app builds.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v1",
+                "users",
+                ":userId",
+                "routines"
+              ],
+              "host": [
+                "app-api",
+                "8slp",
+                "net"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userId",
+                  "description": "(Required) Eight Sleep user identifier."
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a4a5be51-854b-4a1c-9bcd-4c25d20fe1ea",
+              "name": "Routines payload.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    ":userId",
+                    "routines"
+                  ],
+                  "host": [
+                    "app-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Eight Sleep user identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "68c654a8-1525-407b-8c35-26ef59ed06ec",
+              "name": "Missing or expired token.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    ":userId",
+                    "routines"
+                  ],
+                  "host": [
+                    "app-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Eight Sleep user identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://auth-api.8slp.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "76531957-4db3-4475-bf7b-223738998662",
+    "name": "Eight Sleep Unofficial Community Alarms API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "UNOFFICIAL, community-reverse-engineered specification of the Eight Sleep client API that powers the Eight Sleep mobile app. Eight Sleep does NOT publish an official public developer API. The endpoints documented here were derived from open-source projects - notably pyEight (https://github.com/mezz64/pyEight and https://github.com/lukas-clarke/pyEight) and the Home Assistant Eight Sleep integration (https://github.com/lukas-clarke/eight_sleep). They span three hosts: auth-api.8slp.net (OAuth2 token issuance), client-api.8slp.net (user, device, and trends reads), and app-api.8slp.net (temperature, away mode, base, alarms, and routines control). These endpoints are undocumented, unsupported, and may change or break without notice. Use only with your own Eight Sleep account and credentials.\n\nContact Support:\n Name: Eight Sleep",
+      "type": "text/plain"
+    }
+  }
+}

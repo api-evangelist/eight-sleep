@@ -1,0 +1,97 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Eight Sleep Unofficial Community Alarms API",
+    "version": "unofficial-v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Alarms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List alarms (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://auth-api.8slp.net/v1/users/:userId/alarms",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Eight Sleep user identifier."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "UNOFFICIAL read against app-api.8slp.net returning the user's configured thermal/vibration wake-up alarms."
+        },
+        {
+          "info": {
+            "name": "Update an alarm (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://auth-api.8slp.net/v1/users/:userId/alarms/:alarmId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Eight Sleep user identifier."
+              },
+              {
+                "name": "alarmId",
+                "value": "",
+                "type": "path",
+                "description": "Alarm identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "UNOFFICIAL write against app-api.8slp.net that enables, disables, or modifies a single alarm."
+        },
+        {
+          "info": {
+            "name": "Get routines (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://auth-api.8slp.net/v1/users/:userId/routines",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Eight Sleep user identifier."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "UNOFFICIAL read against app-api.8slp.net returning the user's routines, which contain alarm and bedtime/wake configuration in newer app builds."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

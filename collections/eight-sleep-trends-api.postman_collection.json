@@ -1,0 +1,244 @@
+{
+  "item": [
+    {
+      "id": "60f6d315-00d1-4aca-8ca5-a9694d0e1641",
+      "name": "Trends",
+      "description": {
+        "content": "Per-night sleep and biometric trend reads (unofficial).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2cad2fba-b800-480c-8d1d-0688af7a3db0",
+          "name": "Get sleep trends (unofficial)",
+          "request": {
+            "name": "Get sleep trends (unofficial)",
+            "description": {
+              "content": "UNOFFICIAL read against client-api.8slp.net returning per-night sleep trend data - sleep score, sleep-stage breakdown, heart rate, HRV, respiratory rate, and toss-and-turn metrics - over a date range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v1",
+                "users",
+                ":userId",
+                "trends"
+              ],
+              "host": [
+                "client-api",
+                "8slp",
+                "net"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tz",
+                  "value": "<string>",
+                  "description": "IANA timezone used to bucket nights (e.g. America/New_York)."
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<date>",
+                  "description": "Start date (YYYY-MM-DD)."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<date>",
+                  "description": "End date (YYYY-MM-DD)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userId",
+                  "description": "(Required) Eight Sleep user identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "82024b25-2b17-4f48-9f56-3f23b9d8b65b",
+              "name": "Trends payload.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    ":userId",
+                    "trends"
+                  ],
+                  "host": [
+                    "client-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [
+                    {
+                      "key": "tz",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Eight Sleep user identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"days\": [\n    {\n      \"day\": \"1994-04-25\",\n      \"score\": 2399,\n      \"sleepDuration\": 3176,\n      \"presenceDuration\": 4844,\n      \"sleepStages\": [\n        {\n          \"stage\": \"out\",\n          \"duration\": 7461\n        },\n        {\n          \"stage\": \"deep\",\n          \"duration\": 6938\n        }\n      ],\n      \"heartRate\": 8402.536650032216,\n      \"hrv\": 4728.144298992373,\n      \"respiratoryRate\": 4235.807787562059,\n      \"tnt\": 6340\n    },\n    {\n      \"day\": \"2017-10-17\",\n      \"score\": 7364,\n      \"sleepDuration\": 5416,\n      \"presenceDuration\": 1737,\n      \"sleepStages\": [\n        {\n          \"stage\": \"light\",\n          \"duration\": 9818\n        },\n        {\n          \"stage\": \"awake\",\n          \"duration\": 1572\n        }\n      ],\n      \"heartRate\": 1675.9491664740278,\n      \"hrv\": 8140.774810140725,\n      \"respiratoryRate\": 2306.1282032242248,\n      \"tnt\": 4728\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1a5bb52-7384-4998-8f31-39e1e244de44",
+              "name": "Missing or expired token.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "users",
+                    ":userId",
+                    "trends"
+                  ],
+                  "host": [
+                    "client-api",
+                    "8slp",
+                    "net"
+                  ],
+                  "query": [
+                    {
+                      "key": "tz",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) Eight Sleep user identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://auth-api.8slp.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "47ca0245-69fd-4c80-9fa0-b076d23d495d",
+    "name": "Eight Sleep Unofficial Community Alarms Trends API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "UNOFFICIAL, community-reverse-engineered specification of the Eight Sleep client API that powers the Eight Sleep mobile app. Eight Sleep does NOT publish an official public developer API. The endpoints documented here were derived from open-source projects - notably pyEight (https://github.com/mezz64/pyEight and https://github.com/lukas-clarke/pyEight) and the Home Assistant Eight Sleep integration (https://github.com/lukas-clarke/eight_sleep). They span three hosts: auth-api.8slp.net (OAuth2 token issuance), client-api.8slp.net (user, device, and trends reads), and app-api.8slp.net (temperature, away mode, base, alarms, and routines control). These endpoints are undocumented, unsupported, and may change or break without notice. Use only with your own Eight Sleep account and credentials.\n\nContact Support:\n Name: Eight Sleep",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Eight Sleep Unofficial Community Alarms Authentication API",
+    "version": "unofficial-v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Issue an OAuth2 access token (unofficial)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://auth-api.8slp.net/v1/tokens",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "UNOFFICIAL OAuth2 password-grant request against auth-api.8slp.net. Exchanges an account email and password (plus a client_id and client_secret captured from the mobile app) for a bearer access token and refresh token. Not an official, supported, or documented endpoint."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
