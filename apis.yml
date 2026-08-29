@@ -10,6 +10,18 @@ description: Eight Sleep builds the Pod, a temperature-regulating smart mattress
   Sleep mobile app and is used by open-source projects such as pyEight and the Home
   Assistant Eight Sleep integration. Endpoints can change without notice and are not
   supported by Eight Sleep.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
