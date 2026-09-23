@@ -1,13 +1,7 @@
 {
   "provider": "eight-sleep",
   "sources": [
-    "eight-sleep-alarms-api-openapi.yml",
-    "eight-sleep-authentication-api-openapi.yml",
-    "eight-sleep-base-api-openapi.yml",
-    "eight-sleep-device-api-openapi.yml",
-    "eight-sleep-temperature-api-openapi.yml",
-    "eight-sleep-trends-api-openapi.yml",
-    "eight-sleep-user-api-openapi.yml"
+    "_original/eight-sleep-openapi.yml"
   ],
   "outputs": [
     "eight-sleep-alarms-api-openapi.yml",
@@ -21,6 +15,18 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "eight-sleep-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "eight-sleep-alarms-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "eight-sleep-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "eight-sleep-base-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "eight-sleep-device-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "eight-sleep-temperature-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "eight-sleep-trends-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "eight-sleep-user-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

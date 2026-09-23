@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Eight Sleep Unofficial Community Alarms Trends API
-  description: 'UNOFFICIAL, community-reverse-engineered specification of the Eight Sleep client API that powers the Eight Sleep mobile app. Eight Sleep does NOT publish an official public developer API. The endpoints documented here were derived from open-source projects - notably pyEight (https://github.com/mezz64/pyEight and https://github.com/lukas-clarke/pyEight) and the Home Assistant Eight Sleep integration (https://github.com/lukas-clarke/eight_sleep). They span three hosts: auth-api.8slp.net (OAuth2 token issuance), client-api.8slp.net (user, device, and trends reads), and app-api.8slp.net (temperature, away mode, base, alarms, and routines control). These endpoints are undocumented, unsupported, and may change or break without notice. Use only with your own Eight Sleep account and credentials.'
+  title: Eight Sleep Unofficial Community Trends API
+  description: UNOFFICIAL, community-reverse-engineered specification of the Eight Sleep client API that powers the Eight Sleep mobile app.
   contact:
     name: Eight Sleep
     url: https://www.eightsleep.com
