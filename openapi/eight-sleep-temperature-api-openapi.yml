@@ -92,32 +92,6 @@ paths:
           description: Missing or expired token.
 components:
   schemas:
-    TemperatureState:
-      type: object
-      properties:
-        currentLevel:
-          type: integer
-          minimum: -100
-          maximum: 100
-          description: Unit-less heating/cooling level (-100 cool .. 100 warm).
-        currentState:
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - smart
-              - false
-        smart:
-          type: object
-          description: Smart (Autopilot) heating levels by sleep stage.
-          properties:
-            bedTimeLevel:
-              type: integer
-            initialSleepLevel:
-              type: integer
-            finalSleepLevel:
-              type: integer
     AwayModeUpdate:
       type: object
       required:
@@ -146,6 +120,32 @@ components:
               enum:
               - smart
               - false
+    TemperatureState:
+      type: object
+      properties:
+        currentLevel:
+          type: integer
+          minimum: -100
+          maximum: 100
+          description: Unit-less heating/cooling level (-100 cool .. 100 warm).
+        currentState:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - smart
+              - false
+        smart:
+          type: object
+          description: Smart (Autopilot) heating levels by sleep stage.
+          properties:
+            bedTimeLevel:
+              type: integer
+            initialSleepLevel:
+              type: integer
+            finalSleepLevel:
+              type: integer
   parameters:
     UserId:
       name: userId
