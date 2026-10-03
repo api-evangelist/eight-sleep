@@ -60,14 +60,6 @@ paths:
         '401':
           description: Missing or expired token.
 components:
-  parameters:
-    UserId:
-      name: userId
-      in: path
-      required: true
-      description: Eight Sleep user identifier.
-      schema:
-        type: string
   schemas:
     TrendsResponse:
       type: object
@@ -112,6 +104,14 @@ components:
               tnt:
                 type: integer
                 description: Toss-and-turn count.
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      description: Eight Sleep user identifier.
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

@@ -62,14 +62,6 @@ paths:
         '404':
           description: User not found.
 components:
-  parameters:
-    UserId:
-      name: userId
-      in: path
-      required: true
-      description: Eight Sleep user identifier.
-      schema:
-        type: string
   schemas:
     UserResponse:
       type: object
@@ -96,6 +88,14 @@ components:
                   - left
                   - right
                   - solo
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      description: Eight Sleep user identifier.
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http
