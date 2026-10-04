@@ -49,6 +49,14 @@ paths:
         '404':
           description: Device not found.
 components:
+  parameters:
+    DeviceId:
+      name: deviceId
+      in: path
+      required: true
+      description: Eight Sleep Pod device identifier.
+      schema:
+        type: string
   schemas:
     DeviceResponse:
       type: object
@@ -70,14 +78,6 @@ components:
               type: object
               additionalProperties:
                 type: boolean
-  parameters:
-    DeviceId:
-      name: deviceId
-      in: path
-      required: true
-      description: Eight Sleep Pod device identifier.
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

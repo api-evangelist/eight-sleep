@@ -92,6 +92,19 @@ paths:
           description: Missing or expired token.
 components:
   schemas:
+    AwayModeUpdate:
+      type: object
+      required:
+      - awayPeriod
+      properties:
+        awayPeriod:
+          type: object
+          properties:
+            action:
+              type: string
+              enum:
+              - start
+              - end
     TemperatureState:
       type: object
       properties:
@@ -118,19 +131,6 @@ components:
               type: integer
             finalSleepLevel:
               type: integer
-    AwayModeUpdate:
-      type: object
-      required:
-      - awayPeriod
-      properties:
-        awayPeriod:
-          type: object
-          properties:
-            action:
-              type: string
-              enum:
-              - start
-              - end
     TemperatureUpdate:
       type: object
       properties:
