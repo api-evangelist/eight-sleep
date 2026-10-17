@@ -69,22 +69,6 @@ paths:
           description: Missing or expired token.
 components:
   schemas:
-    BaseAngleUpdate:
-      type: object
-      properties:
-        torso:
-          type: integer
-          description: Head (torso) angle in degrees.
-        leg:
-          type: integer
-          description: Feet (leg) angle in degrees.
-        preset:
-          type: string
-          enum:
-          - flat
-          - sleep
-          - relax
-          - reading
     BaseState:
       type: object
       properties:
@@ -101,6 +85,22 @@ components:
           description: Head (torso) angle in degrees.
         preset:
           type: string
+    BaseAngleUpdate:
+      type: object
+      properties:
+        torso:
+          type: integer
+          description: Head (torso) angle in degrees.
+        leg:
+          type: integer
+          description: Feet (leg) angle in degrees.
+        preset:
+          type: string
+          enum:
+          - flat
+          - sleep
+          - relax
+          - reading
   parameters:
     UserId:
       name: userId

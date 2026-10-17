@@ -93,6 +93,13 @@ paths:
           description: Missing or expired token.
 components:
   schemas:
+    AlarmsResponse:
+      type: object
+      properties:
+        alarms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Alarm'
     Alarm:
       type: object
       properties:
@@ -113,13 +120,6 @@ components:
           type: boolean
         snoozeDuration:
           type: integer
-    AlarmsResponse:
-      type: object
-      properties:
-        alarms:
-          type: array
-          items:
-            $ref: '#/components/schemas/Alarm'
   parameters:
     UserId:
       name: userId
