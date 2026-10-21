@@ -68,11 +68,45 @@ edges:
     - password
   detected_by: sweep-health-wellness.py
   first_seen: '2026-10-15'
+- partner_name: Y Combinator
+  partner: y-combinator
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.ycombinator.com/companies/eight-sleep
+  category: accelerator portfolio participation
+  contract_reference:
+    register: Y Combinator company directory (ycombinator.com/companies/<slug>)
+    standard: null
+    spec_file: null
+    role: accelerator-portfolio-company
+    registered_name: Eight Sleep
+    register_id: https://www.ycombinator.com/companies/eight-sleep
+    register_country: US
+    register_website: http://eightsleep.com
+    matched_domain: eightsleep.com
+    matched_by: domain
+    signal_note: 'participation only: the accelerator''s own portfolio register lists the company (cohort / investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-accelerator-portfolios.py
+    detected: '2026-10-21'
+    batch: Summer 2015
+    year: '2014'
+    status: Active
+  detected_by: sweep-accelerator-portfolios.py
+  first_seen: '2026-10-21'
 generated: '2026-10-12'
 method: searched
 checked:
 - https://docs.junction.com/wearables/providers/introduction
 - https://docs.tryterra.co/reference/health-and-fitness-api/supported-integrations
+- https://500.co/api/startups
+- https://500.co/companies
+- https://www.antler.co/portfolio
+- https://www.techstars.com/portfolio
+- https://www.ycombinator.com/companies
 source:
 - https://docs.junction.com/wearables/providers/introduction
 - https://docs.tryterra.co/reference/health-and-fitness-api/supported-integrations

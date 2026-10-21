@@ -77,3 +77,33 @@
     - password
   status: not-a-workflow
   arazzo: null
+- slug: eight-sleep-y-combinator
+  label: Y Combinator
+  partner: y-combinator
+  partner_name: Y Combinator
+  category: accelerator portfolio participation
+  type: register
+  channel: standard-directory
+  evidence: https://www.ycombinator.com/companies/eight-sleep
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: Y Combinator company directory (ycombinator.com/companies/<slug>)
+    standard: null
+    spec_file: null
+    role: accelerator-portfolio-company
+    registered_name: Eight Sleep
+    register_id: https://www.ycombinator.com/companies/eight-sleep
+    register_country: US
+    register_website: http://eightsleep.com
+    matched_domain: eightsleep.com
+    matched_by: domain
+    signal_note: 'participation only: the accelerator''s own portfolio register lists the company (cohort / investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-accelerator-portfolios.py
+    detected: '2026-10-21'
+    batch: Summer 2015
+    year: '2014'
+    status: Active
+  status: not-a-workflow
+  arazzo: null
